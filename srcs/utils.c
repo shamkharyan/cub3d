@@ -1,43 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/21 13:01:42 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/22 18:57:28 by pshamkha         ###   ########.fr       */
+/*   Created: 2024/08/21 19:06:57 by pshamkha          #+#    #+#             */
+/*   Updated: 2024/08/22 14:31:54 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	init_null(t_game *g)
+void	free_split(char **tokens)
 {
-	g->mlx = mlx_init();
-	g->mlx_win = NULL;
-	g->img_tex[0] = NULL;
-	g->img_tex[1] = NULL;
-	g->img_tex[2] = NULL;
-	g->img_tex[3] = NULL;
-	g->img_width = TEX_WIDTH;
-	g->img_height = TEX_HEIGHT;
-	g->floor = NULL;
-	g->ceiling = NULL;
+	int	i;
+
+	i = 0;
+	while (tokens[i] != NULL)
+		free(tokens[i++]);
+	free(tokens);
 }
 
-int	main(int argc, char **argv)
+int	split_size(char **tokens)
 {
-	t_game	g;
+	int	i;
 
-	init_null(&g);
-	if (argc == 2 && check_map(&g, argv[1]))
-	{
-		printf("OK");
-	}
-	else
-	{
-		printf("KO");
-	}
-	return (0);
+	i = 0;
+	while (tokens[i] != NULL)
+		++i;
+	return (i);
+}
+
+void	*xpm2img(t_game *g, char *path)
+{
+	return (mlx_xpm_file_to_image(g->mlx, path, &g->img_width, &g->img_height));
 }

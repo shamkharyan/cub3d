@@ -13,6 +13,7 @@ SRCS = \
 		$(SRCS_DIR)get_next_line_utils.c \
 		$(SRCS_DIR)main.c \
 		$(SRCS_DIR)validation.c \
+		$(SRCS_DIR)utils.c \
 
 OBJS = $(SRCS:.c=.o)
 
