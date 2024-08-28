@@ -4,20 +4,22 @@ LIBFT_DIR = libft/
 LIBFT_NAME = libft.a
 LIBFT = $(LIBFT_DIR)$(LIBFT_NAME)
 
+GNL_DIR = gnl/
+
 SRCS_DIR = ./srcs/
 
 INCLUDES_DIR = ./includes/
 
 SRCS = \
-		$(SRCS_DIR)get_next_line.c \
-		$(SRCS_DIR)get_next_line_utils.c \
+		$(GNL_DIR)get_next_line.c \
+		$(GNL_DIR)get_next_line_utils.c \
 		$(SRCS_DIR)main.c \
 		$(SRCS_DIR)validation.c \
 		$(SRCS_DIR)utils.c \
 
 OBJS = $(SRCS:.c=.o)
 
-DEBUG = -fsanitize=address -g
+# DEBUG = -fsanitize=address -g
 CFLAGS =  -Wall -Werror -Wextra -Imlx
 MLXFLAGS = -Lmlx -lmlx -framework OpenGl -framework Appkit -lm
 

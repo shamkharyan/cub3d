@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/22 18:48:24 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:33:27 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,16 @@ typedef struct s_game
 	int		img_height;
 	t_color	*floor;
 	t_color	*ceiling;
+	int		map_width;
+	int		map_height;
+	char	**map;
 }	t_game;
 
-int	main(int argc, char **argv);
-int	check_map(t_game *g, char *map);
+int		main(int argc, char **argv);
+void	check_map(char *map);
 
 void	free_split(char **tokens);
 int		split_size(char **tokens);
-void	*xpm2img(t_game *g, char *path);
+void	error_exit(const char *err);
 
 #endif

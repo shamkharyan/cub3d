@@ -6,97 +6,99 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:22 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/22 19:09:27 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:46:06 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	check_ext(char *map)
+static void	check_ext_empty(char *map, int fd)
 {
-	return (ft_strlen(map) > 4
-		&& !ft_strncmp(map + ft_strlen(map) - 4, ".cub", 4));
+	char	*line;
+
+	if (ft_strlen(map) <= 4
+		|| ft_strncmp(map + ft_strlen(map) - 4, ".cub", 4))
+		error_exit("Wrong extention of the map\n");
+	if (fd < 0)
+		error_exit("Can't open file or file not exist\n");
+	line = get_next_line(fd);
+	if (line == NULL)
+		error_exit("Empty map\n");
+	free(line);
 }
 
-static int	check_textures(t_game *g, char *map)
+static int	is_tex_or_color(char *token)
 {
-	int		fd;
-	char	*line;
-	char	**tokens;
-	int		i;
+	if (!ft_strncmp(token, "NO", ft_strlen(token)))
+		return (0);
+	else if (!ft_strncmp(token, "SO", ft_strlen(token)))
+		return (1);
+	else if (!ft_strncmp(token, "WE", ft_strlen(token)))
+		return (2);
+	else if (!ft_strncmp(token, "EA", ft_strlen(token)))
+		return (3);
+	else if (!ft_strncmp(token, "C", ft_strlen(token)))
+		return (4);
+	else if (!ft_strncmp(token, "F", ft_strlen(token)))
+		return (5);
+	else if (!ft_strncmp(token, "\n", ft_strlen(token)))
+		return (6);
+	else if (!ft_strncmp(token, "1", 1))
+		return (7);
+	else
+		return (-1);
+}
 
-	fd = open(map, O_RDONLY);
+static void	check_textures(int fd)
+{
+	int		i;
+	int		img[6];
+	char	*line;
+	char	*new_line;
+	char	**tokens;
+
 	line = get_next_line(fd);
-	line[ft_strlen(line) - 1] = '\0';
+	ft_bzero(img, 6 * sizeof(int));
 	while (line != NULL)
 	{
-		tokens = ft_split(line, ' ');
-		if (split_size(tokens) == 2)
+		new_line = ft_strtrim(line, " \n");
+		free(line);
+		tokens = ft_split(new_line, ' ');
+		if (split_size(tokens) <= 2)
 		{
-			if (!ft_strncmp(tokens[0], "NO", ft_strlen(tokens[0])))
-				i = NO;
-			else if (!ft_strncmp(tokens[0], "SO", ft_strlen(tokens[0])))
-				i = SO;
-			else if (!ft_strncmp(tokens[0], "WE", ft_strlen(tokens[0])))
-				i = WE;
-			else if (!ft_strncmp(tokens[0], "EA", ft_strlen(tokens[0])))
-				i = EA;
-			else
-				i = -1;
-			if (i != -1)
+			i = is_tex_or_color(tokens[0]);
+			if (i >= 0 && i <= 5)
+				++img[i];
+			else if (i == -1)
 			{
-				printf("%s:\n", tokens[1]);
-				g->img_tex[i] = xpm2img(g, tokens[1]);
-				if (g->img_tex[i] == NULL)
-				{
-					printf("Error: Invalid path to texture\n");
-					return (0);
-				}
-				free(line);
-				line = get_next_line(fd);
-				line[ft_strlen(line) - 1] = '\0';
+				free(new_line);
+				free_split(tokens);
+				error_exit("Wrong token name\n");
 			}
-			else
-			{
-				printf("Error: Invalid parameter\n");
-				return (0);
-			}
+			else if (i == 7)
+				break;
 		}
 		else
-		{
-			printf("Error: Invalid parameter\n");
-			return (0);
-		}
+			error_exit("Wrong token count\n");
+		free_split(tokens);
+		free(new_line);
+		line = get_next_line(fd);
 	}
-	return (1);
+	i = 0;
+	while (i < 6)
+		if (img[i++] != 1)
+			error_exit("Wrong amount of tokens\n");
 }
 
-int	check_map(t_game *g, char *map)
+void	check_map(char *map)
 {
-	int		fd;
-	char	*line;
+	int	fd;
 
-	if (check_ext(map))
-	{
-		fd = open(map, O_RDONLY);
-		if (fd < 0)
-		{
-			printf("Error: Can't open file or file not exist\n");
-			return (0);
-		}
-		line = get_next_line(fd);
-		if (line == NULL)
-		{
-			printf("Error: Empty map\n");
-			return (close(fd), 0);
-		}
-		close(fd);
-		check_textures(g, map);
-	}
-	else
-	{
-		printf("Error: Wrong extention\n");
-		return (0);
-	}
-	return (1);
+	fd = open(map, O_RDONLY);
+	check_ext_empty(map, fd);
+	close(fd);
+	get_next_line(-1);
+	fd = open(map, O_RDONLY);
+	check_textures(fd);
+	close(fd);
 }
