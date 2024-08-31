@@ -14,7 +14,8 @@ SRCS = \
 		$(GNL_DIR)get_next_line.c \
 		$(GNL_DIR)get_next_line_utils.c \
 		$(SRCS_DIR)main.c \
-		$(SRCS_DIR)validation.c \
+		$(SRCS_DIR)texture_validation.c \
+		$(SRCS_DIR)map_validation.c \
 		$(SRCS_DIR)utils.c \
 
 OBJS = $(SRCS:.c=.o)
@@ -29,9 +30,10 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
-	$(CC) $(DEBUG) $(MLXFLAGS) $(OBJS) -o $(NAME) $(LIBFT)
+	make -C $(LIBFT_DIR) bonus
+	$(CC) $(DEBUG) $(CFLAGS) $(MLXFLAGS) $(OBJS) -o $(NAME) $(LIBFT)
 
-%.o: %.c Makefile
+%.o: %.c Makefile $(INCLUDES_DIR)cub3d.h $(INCLUDES_DIR)get_next_line.h
 	$(CC) $(DEBUG) $(CFLAGS) -c $< -o $@ -I $(INCLUDES_DIR)
 
 clean:

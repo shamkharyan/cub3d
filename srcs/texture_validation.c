@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:22 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/31 18:38:25 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/08/31 20:01:45 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,48 +58,59 @@ static int	is_tex_or_color(t_game *g, char **tokens)
 	return (i);
 }
 
-static void	check_textures(t_game *g, int fd)
+static void	check_tokens(t_game *g, char *new_line, int *img_check)
 {
 	int		i;
-	int		img[6];
-	char	*line;
-	char	*new_line;
 	char	**tokens;
 
+	tokens = ft_split(new_line, ' ');
+	if (split_size(tokens) == 2 && *tokens[0] != '1')
+	{
+		i = is_tex_or_color(g, tokens);
+		if (i >= 0 && i <= 5)
+			++img_check[i];
+		else if (i == -1)
+		{
+			free(new_line);
+			free_split(tokens);
+			error_exit("Wrong token name or value\n");
+		}
+	}
+	else if (split_size(tokens) != 0)
+		error_exit("Wrong amount of values\n");
+	free_split(tokens);
+}
+
+static void	check_texts(t_game *g, int fd)
+{
+	int		i;
+	int		img_check[6];
+	char	*line;
+	char	*new_line;
+
 	line = get_next_line(fd);
-	ft_bzero(img, 6 * sizeof(int));
+	ft_bzero(img_check, 6 * sizeof(int));
 	while (line != NULL)
 	{
 		new_line = ft_strtrim(line, "\n ");
-		free(line);
-		tokens = ft_split(new_line, ' ');
-		if (split_size(tokens) == 2 && *tokens[0] != '1')
+		if (new_line != NULL && *new_line == '1')
 		{
-			i = is_tex_or_color(g, tokens);
-			if (i >= 0 && i <= 5)
-				++img[i];
-			else if (i == -1)
-			{
-				free(new_line);
-				free_split(tokens);
-				error_exit("Wrong token name or value\n");
-			}
-		}
-		else if (split_size(tokens) != 0 && *tokens[0] == '1')
+			free(new_line);
+			free(line);
 			break ;
-		else if (split_size(tokens) != 0)
-			error_exit("Wrong amount of values\n");
-		free_split(tokens);
+		}
+		free(line);
+		check_tokens(g, new_line, img_check);
 		free(new_line);
 		line = get_next_line(fd);
 	}
 	i = 0;
 	while (i < 6)
-		if (img[i++] != 1)
+		if (img_check[i++] != 1)
 			error_exit("Wrong amount of tokens\n");
 }
 
-void	check_map(t_game *g, char *path)
+void	check_textures(t_game *g, char *path)
 {
 	int	fd;
 
@@ -109,6 +120,6 @@ void	check_map(t_game *g, char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		error_exit("Can't open file or file not exist\n");
-	check_textures(g, fd);
+	check_texts(g, fd);
 	close(fd);
 }

@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/31 18:15:46 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/08/31 20:26:17 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_game
 }	t_game;
 
 int		main(int argc, char **argv);
+void	check_textures(t_game *g, char *path);
 void	check_map(t_game *g, char *path);
 
 void	free_split(char **tokens);
