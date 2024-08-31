@@ -6,50 +6,59 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:22 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/28 16:46:06 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/08/31 18:38:25 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	check_ext_empty(char *map, int fd)
+static int	check_color(t_game *g, char *line, int i)
 {
-	char	*line;
+	char	**colors;
 
-	if (ft_strlen(map) <= 4
-		|| ft_strncmp(map + ft_strlen(map) - 4, ".cub", 4))
-		error_exit("Wrong extention of the map\n");
-	if (fd < 0)
-		error_exit("Can't open file or file not exist\n");
-	line = get_next_line(fd);
-	if (line == NULL)
-		error_exit("Empty map\n");
-	free(line);
-}
-
-static int	is_tex_or_color(char *token)
-{
-	if (!ft_strncmp(token, "NO", ft_strlen(token)))
+	if (*line == ',' || line[ft_strlen(line) - 1] == ',')
 		return (0);
-	else if (!ft_strncmp(token, "SO", ft_strlen(token)))
-		return (1);
-	else if (!ft_strncmp(token, "WE", ft_strlen(token)))
-		return (2);
-	else if (!ft_strncmp(token, "EA", ft_strlen(token)))
-		return (3);
-	else if (!ft_strncmp(token, "C", ft_strlen(token)))
-		return (4);
-	else if (!ft_strncmp(token, "F", ft_strlen(token)))
-		return (5);
-	else if (!ft_strncmp(token, "\n", ft_strlen(token)))
-		return (6);
-	else if (!ft_strncmp(token, "1", 1))
-		return (7);
-	else
-		return (-1);
+	colors = ft_split(line, ',');
+	if (split_size(colors) == 3)
+	{
+		g->colors[i].r = str2rgb(colors[0]);
+		g->colors[i].g = str2rgb(colors[1]);
+		g->colors[i].b = str2rgb(colors[2]);
+		if (g->colors[i].r != -1 && g->colors[i].b != -1
+			&& g->colors[i].g != -1)
+			return (free_split(colors), 1);
+	}
+	free_split(colors);
+	return (0);
 }
 
-static void	check_textures(int fd)
+static int	is_tex_or_color(t_game *g, char **tokens)
+{
+	int	i;
+
+	if (!ft_strncmp(tokens[0], "NO", ft_strlen(tokens[0])))
+		i = 0;
+	else if (!ft_strncmp(tokens[0], "SO", ft_strlen(tokens[0])))
+		i = 1;
+	else if (!ft_strncmp(tokens[0], "WE", ft_strlen(tokens[0])))
+		i = 2;
+	else if (!ft_strncmp(tokens[0], "EA", ft_strlen(tokens[0])))
+		i = 3;
+	else if (!ft_strncmp(tokens[0], "C", ft_strlen(tokens[0])))
+		i = 4;
+	else if (!ft_strncmp(tokens[0], "F", ft_strlen(tokens[0])))
+		i = 5;
+	else
+		i = -1;
+	if (i >= 0 && i <= 3)
+		g->img_path[i] = ft_strdup(tokens[1]);
+	else if (i == 4 || i == 5)
+		if (!check_color(g, tokens[1], i - 4))
+			return (-1);
+	return (i);
+}
+
+static void	check_textures(t_game *g, int fd)
 {
 	int		i;
 	int		img[6];
@@ -61,25 +70,25 @@ static void	check_textures(int fd)
 	ft_bzero(img, 6 * sizeof(int));
 	while (line != NULL)
 	{
-		new_line = ft_strtrim(line, " \n");
+		new_line = ft_strtrim(line, "\n ");
 		free(line);
 		tokens = ft_split(new_line, ' ');
-		if (split_size(tokens) <= 2)
+		if (split_size(tokens) == 2 && *tokens[0] != '1')
 		{
-			i = is_tex_or_color(tokens[0]);
+			i = is_tex_or_color(g, tokens);
 			if (i >= 0 && i <= 5)
 				++img[i];
 			else if (i == -1)
 			{
 				free(new_line);
 				free_split(tokens);
-				error_exit("Wrong token name\n");
+				error_exit("Wrong token name or value\n");
 			}
-			else if (i == 7)
-				break;
 		}
-		else
-			error_exit("Wrong token count\n");
+		else if (split_size(tokens) != 0 && *tokens[0] == '1')
+			break ;
+		else if (split_size(tokens) != 0)
+			error_exit("Wrong amount of values\n");
 		free_split(tokens);
 		free(new_line);
 		line = get_next_line(fd);
@@ -90,15 +99,16 @@ static void	check_textures(int fd)
 			error_exit("Wrong amount of tokens\n");
 }
 
-void	check_map(char *map)
+void	check_map(t_game *g, char *path)
 {
 	int	fd;
 
-	fd = open(map, O_RDONLY);
-	check_ext_empty(map, fd);
-	close(fd);
-	get_next_line(-1);
-	fd = open(map, O_RDONLY);
-	check_textures(fd);
+	if (ft_strlen(path) <= 4
+		|| ft_strncmp(path + ft_strlen(path) - 4, ".cub", 4))
+		error_exit("Wrong extention of the map\n");
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		error_exit("Can't open file or file not exist\n");
+	check_textures(g, fd);
 	close(fd);
 }

@@ -6,9 +6,14 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:34:31 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/28 16:31:18 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/08/31 16:16:36 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+static void	get_map()
+{
+	
+}
 
 static void	check_rows(char **map, int height, int width)
 {

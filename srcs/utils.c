@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:06:57 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/28 16:41:06 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/08/31 18:15:33 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,19 @@ void	error_exit(const char *err)
 	exit(1);
 }
 
-int	is_map_start(char *line)
+int	str2rgb(char *color)
 {
-	
+	int	i;
+	int	rgb;
+
+	i = 0;
+	while (ft_isdigit(color[i]) && color[i] != '\0')
+		++i;
+	if (i < 4 && color[i] == '\0')
+	{
+		rgb = ft_atoi(color);
+		if (rgb < 256)
+			return (rgb);
+	}
+	return (-1);
 }

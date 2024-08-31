@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:42 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/28 16:35:08 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/08/31 18:07:10 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	main(int argc, char **argv)
 {
+	t_game	g;
+
 	if (argc == 2)
 	{
-		check_map(argv[1]);
+		check_map(&g, argv[1]);
 		printf("OK");
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/28 14:33:27 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/08/31 18:15:46 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,40 +29,33 @@
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
 
-typedef enum s_tex
-{
-	NO,
-	SO,
-	WE,
-	EA,
-}	t_tex;
-
 typedef struct s_color
 {
-	short	red;
-	short	green;
-	short	blue;
+	short	r;
+	short	g;
+	short	b;
 }	t_color;
 
 typedef struct s_game
 {
 	void	*mlx;
 	void	*mlx_win;
-	void	*img_tex[4];
+	void	*img[4];
+	char	*img_path[4];
 	int		img_width;
 	int		img_height;
-	t_color	*floor;
-	t_color	*ceiling;
+	t_color	colors[2];
 	int		map_width;
 	int		map_height;
 	char	**map;
 }	t_game;
 
 int		main(int argc, char **argv);
-void	check_map(char *map);
+void	check_map(t_game *g, char *path);
 
 void	free_split(char **tokens);
 int		split_size(char **tokens);
 void	error_exit(const char *err);
+int		str2rgb(char *color);
 
 #endif
