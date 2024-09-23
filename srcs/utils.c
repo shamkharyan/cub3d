@@ -32,10 +32,10 @@ int	split_size(char **tokens)
 	return (i);
 }
 
-void	*xpm2img(t_game *g, char *path)
+/*void	*xpm2img(t_game *g, char *path)
 {
 	return (mlx_xpm_file_to_image(g->mlx, path, &g->img_width, &g->img_height));
-}
+}*/
 
 void	error_exit(const char *err)
 {

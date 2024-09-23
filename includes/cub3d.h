@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/31 20:26:17 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/09/24 00:04:18 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_game
 	void	*mlx;
 	void	*mlx_win;
 	void	*img[4];
-	char	*img_path[4];
+	char	*data_path[6];
 	int		img_width;
 	int		img_height;
 	t_color	colors[2];

@@ -22,7 +22,7 @@ OBJS = $(SRCS:.c=.o)
 
 # DEBUG = -fsanitize=address -g
 CFLAGS =  -Wall -Werror -Wextra -Imlx
-MLXFLAGS = -Lmlx -lmlx -framework OpenGl -framework Appkit -lm
+# MLXFLAGS = -Lmlx -lmlx -framework OpenGl -framework Appkit -lm
 
 CC = cc
 
