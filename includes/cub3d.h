@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/09/24 00:04:18 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/09/24 23:17:49 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,12 @@ typedef struct s_game
 
 int		main(int argc, char **argv);
 void	check_textures(t_game *g, char *path);
-void	check_map(t_game *g, char *path);
+void	check_map(t_game *g, int fd, char **line);
 
 void	free_split(char **tokens);
 int		split_size(char **tokens);
 void	error_exit(const char *err);
 int		str2rgb(char *color);
+int		is_empty_line(char *line);
 
 #endif

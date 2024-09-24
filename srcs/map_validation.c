@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:34:31 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/31 20:39:50 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/09/25 00:13:49 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,61 @@
 // 	}
 // }
 
-void	check_map(t_game *g, char *path)
+static void	parse_map(t_game *g, t_list *head)
 {
-	int	fd;
+	t_list	*temp;
+	int		i;
+	int		j;
 
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		error_exit("Can't open file or file not exist\n");
-	g->map_height = 0;
-	// get_map_params(g, fd);
+	g->map = (char **) malloc(g->map_height * sizeof(char *));
+	temp = head;
+	i = -1;
+	while (++i < g->map_height)
+		g->map[i] = (char *) malloc(g->map_width * sizeof(char));
+	i = -1;
+	while (++i < g->map_height)
+	{
+		j = -1;
+		while (++j < (int) ft_strlen((char *) temp->content))
+			map[i][j] = temp->content[j];
+		while (++j < g->map_width)
+			map[i][j] = ' ';
+		map[i][j] = '\0';
+	}
+}
+
+static void	get_map(t_game *g, int fd, char **line)
+{
+	t_list	*head;
+	t_list	*temp;
+	
+	while (*line != NULL && is_empty_line(*line))
+	{
+		free(*line);
+		*line = get_next_line(fd);
+	}
+	head = NULL;
+	while (*line != NULL && !is_empty_line(*line))
+	{
+		ft_lstadd_back(&head, ft_lstnew(ft_strdup(*line)));
+		free(*line);
+		*line = get_next_line(fd);
+	}
+	free(*line);
+	g->map_height = ft_lstsize(head);
+	temp = head;
+	while (temp != NULL)
+	{
+		if (g->map_width < (int) ft_strlen(temp->content))
+			g->map_width = (int) ft_strlen(temp->content);
+		temp = temp->next;
+	}
+	parse_map(g, head);
+}
+
+
+
+void	check_map(t_game *g, int fd, char **line)
+{
+	get_map(g, fd, line);
 }

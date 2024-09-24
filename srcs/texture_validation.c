@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:22 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/09/24 00:05:22 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/09/24 23:49:38 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,38 +69,40 @@ static int	check_tokens_count(int *tokens_count)
 	return (1);
 }
 
-static int	check_texts(t_game *g, int fd)
+static int	check_texts(t_game *g, int fd, char **line)
 {
-	char	*line;
 	char	*new_line;
 	char	**tokens;
 	int		tokens_count[6];
 	int		flag;
 
-	line = get_next_line(fd);
+	*line = get_next_line(fd);
+	printf("LINE = %s\n", *line);
 	ft_bzero(tokens_count, 6 * sizeof(int));
 	flag = 0;
-	while (line != NULL && !check_tokens_count(tokens_count))
+	while (*line != NULL && !check_tokens_count(tokens_count))
 	{
-		new_line = ft_strtrim(line, " \n");
-		free(line);
+		new_line = ft_strtrim(*line, " \n");
+		free(*line);
 		if (*new_line != '\0')
 		{
 			tokens = ft_split(new_line, ' ');
 			flag = check_token(g, tokens, tokens_count);
 			free_split(tokens);
 			if (flag == -1)
-				error_exit("Wrong token or token count\n");
+				free(new_line), error_exit("Wrong token or token count\n");
 		}
 		free(new_line);
-		line = get_next_line(fd);
+		*line = get_next_line(fd);
+		printf("LINE = %s\n", *line);
 	}
 	return (check_tokens_count(tokens_count));
 }
 
 void	check_textures(t_game *g, char *path)
 {
-	int	fd;
+	int		fd;
+	char	*line;
 
 	if (ft_strlen(path) <= 4
 		|| ft_strncmp(path + ft_strlen(path) - 4, ".cub", 4))
@@ -108,7 +110,9 @@ void	check_textures(t_game *g, char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		error_exit("Can't open file or file not exist\n");
-	if (!check_texts(g, fd))
+	if (!check_texts(g, fd, &line))
 		error_exit("Wrong token count\n");
+	g->map_width = 0;
+	check_map(g, fd, &line);
 	close(fd);
 }

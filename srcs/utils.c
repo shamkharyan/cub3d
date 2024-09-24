@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:06:57 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/08/31 19:29:19 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/09/24 22:47:16 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,15 @@ int	str2rgb(char *color)
 			return (rgb);
 	}
 	return (-1);
+}
+
+int	is_empty_line(char *line)
+{
+	int	i;
+
+	i = -1;
+	while (line[++i] != '\0')
+		if (line[i] != ' ' && line[i] != '\n')
+			return (0);
+	return (1);
 }
