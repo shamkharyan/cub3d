@@ -6,53 +6,62 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:34:31 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/09/25 00:13:49 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/09/26 00:04:53 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// static void	check_rows(char **map, int height, int width)
-// {
-// 	int	i;
-// 	int	j;
+static int	check_borders(t_game *g)
+{
+	int	i;
+	int	j;
 
-// 	i = -1;
-// 	while (++i < height)
-// 	{
-// 		j = 0;
-// 		while (map[i][j] == ' ')
-// 			++j;
-// 		if (map[i][j] != '1')
-// 			error_exit("Borders isn't closed\n");
-// 		j = width - 1;
-// 		while (map[i][j] == ' ')
-// 			--j;
-// 		if (map[i][j] != '1')
-// 			error_exit("Borders isn't closed\n");
-// 	}
-// }
+	i = -1;
+	while (++i < g->map_height)
+	{
+		j = -1;
+		while (++j < g->map_width)
+		{
+			if (g->map[i][j] == '0')
+			{
+				if (i == 0 || i == g->map_height - 1 || j == 0 || j == g->map_width - 1)
+					return (0);
+				if (g->map[i][j + 1] == ' ')
+					return (0);
+				if (g->map[i][j - 1] == ' ')
+					return (0);
+				if (g->map[i + 1][j] == ' ')
+					return (0);
+				if (g->map[i - 1][j] == ' ')
+					return (0);
+			}
+		}
+	}
+	return (1);
+}
 
-// static void	check_cols(char **map, int height, int width)
-// {
-// 	int	i;
-// 	int	j;
+static int	check_content(t_game *g)
+{
+	int	i;
+	int	j;
+	int	player;
 
-// 	i = -1;
-// 	while (++i < width)
-// 	{
-// 		j = 0;
-// 		while (map[j][i] == ' ')
-// 			++j;
-// 		if (map[j][i] != '1')
-// 			error_exit("Borders isn't closed\n");
-// 		j = width - 1;
-// 		while (map[j][i] == ' ')
-// 			--j;
-// 		if (map[j][i] != '1')
-// 			error_exit("Borders isn't closed\n");
-// 	}
-// }
+	player = 0;
+	i = -1;
+	while (++i < g->map_height)
+	{
+		j = -1;
+		while (++j < g->map_width)
+		{
+			if (g->map[i][j] == 'N' || g->map[i][j] == 'S' || g->map[i][j] == 'E' || g->map[i][j] == 'W')
+				++player;
+			else if (g->map[i][j] != '1' && g->map[i][j] != '0' && g->map[i][j] != ' ')
+				return (0);
+		}
+	}
+	return (player == 1);
+}
 
 static void	parse_map(t_game *g, t_list *head)
 {
@@ -64,16 +73,16 @@ static void	parse_map(t_game *g, t_list *head)
 	temp = head;
 	i = -1;
 	while (++i < g->map_height)
-		g->map[i] = (char *) malloc(g->map_width * sizeof(char));
-	i = -1;
-	while (++i < g->map_height)
 	{
+		g->map[i] = (char *) malloc((g->map_width + 1) * sizeof(char));
 		j = -1;
-		while (++j < (int) ft_strlen((char *) temp->content))
-			map[i][j] = temp->content[j];
 		while (++j < g->map_width)
-			map[i][j] = ' ';
-		map[i][j] = '\0';
+			if (j < (int) ft_strlen((char *) temp->content))
+				g->map[i][j] = *((char *) temp->content + j);
+			else
+				g->map[i][j] = ' ';
+		g->map[i][j] = '\0';
+		temp = temp->next;
 	}
 }
 
@@ -90,7 +99,7 @@ static void	get_map(t_game *g, int fd, char **line)
 	head = NULL;
 	while (*line != NULL && !is_empty_line(*line))
 	{
-		ft_lstadd_back(&head, ft_lstnew(ft_strdup(*line)));
+		ft_lstadd_back(&head, ft_lstnew(ft_strtrim(*line, "\n")));
 		free(*line);
 		*line = get_next_line(fd);
 	}
@@ -111,4 +120,8 @@ static void	get_map(t_game *g, int fd, char **line)
 void	check_map(t_game *g, int fd, char **line)
 {
 	get_map(g, fd, line);
+	if (!check_content(g))
+		error_exit("Wront content of the map\n");
+	if (!check_borders(g))
+		error_exit("Borders aren't closed\n");
 }

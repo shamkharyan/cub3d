@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:22 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/09/24 23:49:38 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/09/25 22:18:42 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static int	check_texts(t_game *g, int fd, char **line)
 	int		flag;
 
 	*line = get_next_line(fd);
-	printf("LINE = %s\n", *line);
 	ft_bzero(tokens_count, 6 * sizeof(int));
 	flag = 0;
 	while (*line != NULL && !check_tokens_count(tokens_count))
@@ -94,7 +93,6 @@ static int	check_texts(t_game *g, int fd, char **line)
 		}
 		free(new_line);
 		*line = get_next_line(fd);
-		printf("LINE = %s\n", *line);
 	}
 	return (check_tokens_count(tokens_count));
 }
