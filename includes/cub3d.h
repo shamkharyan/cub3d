@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/09/24 23:17:49 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/09/27 22:48:21 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
 
+typedef enum s_textures
+{
+	NO,
+	SO,
+	WE,
+	EA,
+	C,
+	F
+}	t_textures;
+
+typedef struct s_cord
+{
+	int	x;
+	int	y;
+}	t_cord;
+
 typedef struct s_color
 {
 	short	r;
@@ -45,13 +61,14 @@ typedef struct s_game
 	int		img_width;
 	int		img_height;
 	t_color	colors[2];
+	t_cord	player;
 	int		map_width;
 	int		map_height;
 	char	**map;
 }	t_game;
 
 int		main(int argc, char **argv);
-void	check_textures(t_game *g, char *path);
+int		check_textures(t_game *g, int fd, char **line);
 void	check_map(t_game *g, int fd, char **line);
 
 void	free_split(char **tokens);

@@ -6,31 +6,11 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:22 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/09/25 22:18:42 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/09/27 22:49:47 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// static int	check_color(t_game *g, char *line, int i)
-// {
-// 	char	**colors;
-
-// 	if (*line == ',' || line[ft_strlen(line) - 1] == ',')
-// 		return (0);
-// 	colors = ft_split(line, ',');
-// 	if (split_size(colors) == 3)
-// 	{
-// 		g->colors[i].r = str2rgb(colors[0]);
-// 		g->colors[i].g = str2rgb(colors[1]);
-// 		g->colors[i].b = str2rgb(colors[2]);
-// 		if (g->colors[i].r != -1 && g->colors[i].b != -1
-// 			&& g->colors[i].g != -1)
-// 			return (free_split(colors), 1);
-// 	}
-// 	free_split(colors);
-// 	return (0);
-// }
 
 static int	check_token(t_game *g, char **tokens, int *tokens_count)
 {
@@ -58,7 +38,7 @@ static int	check_token(t_game *g, char **tokens, int *tokens_count)
 	return (-1);
 }
 
-static int	check_tokens_count(int *tokens_count)
+static int	check_token_count(int *tokens_count)
 {
 	int	i;
 
@@ -69,48 +49,27 @@ static int	check_tokens_count(int *tokens_count)
 	return (1);
 }
 
-static int	check_texts(t_game *g, int fd, char **line)
+int	check_textures(t_game *g, int fd, char **line)
 {
 	char	*new_line;
 	char	**tokens;
 	int		tokens_count[6];
-	int		flag;
 
 	*line = get_next_line(fd);
 	ft_bzero(tokens_count, 6 * sizeof(int));
-	flag = 0;
-	while (*line != NULL && !check_tokens_count(tokens_count))
+	while (*line != NULL && !check_token_count(tokens_count))
 	{
 		new_line = ft_strtrim(*line, " \n");
 		free(*line);
 		if (*new_line != '\0')
 		{
 			tokens = ft_split(new_line, ' ');
-			flag = check_token(g, tokens, tokens_count);
+			if (check_token(g, tokens, tokens_count) == -1)
+				return (free_split(tokens), free(new_line), 0);
 			free_split(tokens);
-			if (flag == -1)
-				free(new_line), error_exit("Wrong token or token count\n");
 		}
 		free(new_line);
 		*line = get_next_line(fd);
 	}
-	return (check_tokens_count(tokens_count));
-}
-
-void	check_textures(t_game *g, char *path)
-{
-	int		fd;
-	char	*line;
-
-	if (ft_strlen(path) <= 4
-		|| ft_strncmp(path + ft_strlen(path) - 4, ".cub", 4))
-		error_exit("Wrong extention of the map\n");
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		error_exit("Can't open file or file not exist\n");
-	if (!check_texts(g, fd, &line))
-		error_exit("Wrong token count\n");
-	g->map_width = 0;
-	check_map(g, fd, &line);
-	close(fd);
+	return (check_token_count(tokens_count));
 }

@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:34:31 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/09/26 00:04:53 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/09/27 22:06:22 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ static int	check_content(t_game *g)
 		while (++j < g->map_width)
 		{
 			if (g->map[i][j] == 'N' || g->map[i][j] == 'S' || g->map[i][j] == 'E' || g->map[i][j] == 'W')
+			{
+				g->player.x = j;
+				g->player.y = i;
 				++player;
+			}
 			else if (g->map[i][j] != '1' && g->map[i][j] != '0' && g->map[i][j] != ' ')
 				return (0);
 		}
@@ -84,6 +88,7 @@ static void	parse_map(t_game *g, t_list *head)
 		g->map[i][j] = '\0';
 		temp = temp->next;
 	}
+	ft_lstclear(&head, free);
 }
 
 static void	get_map(t_game *g, int fd, char **line)
