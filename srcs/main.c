@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
+/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:42 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/09/27 22:51:33 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/10/01 19:05:33 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,27 @@ int	check_all(t_game *g, char *path)
 
 	if (ft_strlen(path) <= 4
 		|| ft_strncmp(path + ft_strlen(path) - 4, ".cub", 4))
-		error_exit("Wrong extention of the map.\n");
+		return (err_msg("Wrong extention of the map.\n"), 0);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		error_exit("Can't open file or file not exist.\n");
+		return (err_msg("Can't open file or file not exist.\n"), 0);
 	if (!check_textures(g, fd, &last_line))
-		error_exit("Wrong token name or count.\n");
-	g->map_width = 0;
-	check_map(g, fd, &last_line);
+	{
+		err_msg("Wrong token name or count.\n"), close(fd);
+		return (clean_data(g), 0);
+	}
+	if (!check_map(g, fd, &last_line))
+	{
+		clean_map(g), close(fd);
+		return (clean_data(g), 0);
+	}
+	if (!check_data(g))
+	{
+		clean_map(g), clean_mlx(g), close(fd);
+		return (clean_data(g), 0);
+	}
 	close(fd);
+	clean_data(g);
 	return (1);
 }
 
@@ -37,11 +49,11 @@ int	main(int argc, char **argv)
 
 	if (argc == 2)
 	{
-		check_all(&g, argv[1]);
-		printf("OK\n");
-		//check_map(&g, argv[1]);
+		game_init(&g);
+		if (check_all(&g, argv[1]))
+			printf("OK\n");
 	}
 	else
-		error_exit("Wrong number of parameters\n");
+		return (err_msg("Wrong number of arguments.\n"), 1);
 	return (0);
 }

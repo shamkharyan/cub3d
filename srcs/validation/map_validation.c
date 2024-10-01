@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:34:31 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/01 16:31:43 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:22:47 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,21 +119,23 @@ static void	get_map(t_game *g, int fd, char **line)
 	parse_map(g, head);
 }
 
-
-
-void	check_map(t_game *g, int fd, char **line)
+//If fails, need to clean data_path and map
+int	check_map(t_game *g, int fd, char **line)
 {
 	get_map(g, fd, line);
 	if (!check_content(g))
-		error_exit("Wront content of the map\n");
+		return (err_msg("Wront content in the map.\n"), 0);
 	if (!check_borders(g))
-		error_exit("Borders aren't closed\n");
+		return (err_msg("Borders aren't closed.\n"), 0);
 	while (*line != NULL && is_empty_line(*line))
 	{
 		free(*line);
 		*line = get_next_line(fd);
 	}
 	if (*line != NULL)
-		free(*line), error_exit("Content after map\n");
-
+	{
+		free(*line);
+		return (err_msg("Content after the map.\n"), 0);
+	}
+	return (1);
 }

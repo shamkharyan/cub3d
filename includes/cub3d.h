@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
+/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/09/27 22:48:21 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/10/01 18:49:32 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "get_next_line.h"
 # include <stdio.h>
 # include <fcntl.h>
+# include <math.h>
 
 # define KEY_W 13
 # define KEY_S 1
@@ -26,8 +27,11 @@
 # define KEY_D 2
 # define KEY_ESC 53
 
-# define TEX_WIDTH 64
-# define TEX_HEIGHT 64
+# define IMG_WIDTH 64
+# define IMG_HEIGHT 64
+
+# define WIN_WIDTH 1024
+# define WIN_HEIGHT 512
 
 typedef enum s_textures
 {
@@ -39,6 +43,14 @@ typedef enum s_textures
 	F
 }	t_textures;
 
+typedef struct s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
+
 typedef struct s_cord
 {
 	int	x;
@@ -47,9 +59,9 @@ typedef struct s_cord
 
 typedef struct s_color
 {
-	short	r;
-	short	g;
-	short	b;
+	int	r;
+	int	g;
+	int	b;
 }	t_color;
 
 typedef struct s_game
@@ -68,13 +80,23 @@ typedef struct s_game
 }	t_game;
 
 int		main(int argc, char **argv);
+void	game_init(t_game *g);
 int		check_textures(t_game *g, int fd, char **line);
-void	check_map(t_game *g, int fd, char **line);
+int		check_map(t_game *g, int fd, char **line);
+int		check_data(t_game *g);
 
 void	free_split(char **tokens);
 int		split_size(char **tokens);
 void	error_exit(const char *err);
+void	err_msg(const char *err);
 int		str2rgb(char *color);
 int		is_empty_line(char *line);
+void	*xpm2img(t_game *g, char *path);
+
+void	start(t_game *g);
+
+void	clean_map(t_game *g);
+void	clean_data(t_game *g);
+void	clean_mlx(t_game *g);
 
 #endif

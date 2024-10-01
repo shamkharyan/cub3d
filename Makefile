@@ -4,9 +4,11 @@ LIBFT_DIR = libft/
 LIBFT_NAME = libft.a
 LIBFT = $(LIBFT_DIR)$(LIBFT_NAME)
 
-GNL_DIR = gnl/
-
 SRCS_DIR = ./srcs/
+
+GNL_DIR = gnl/
+VALIDATION_DIR = $(SRCS_DIR)validation/
+UTILS_DIR = $(SRCS_DIR)utils/
 
 INCLUDES_DIR = ./includes/
 
@@ -14,9 +16,12 @@ SRCS = \
 		$(GNL_DIR)get_next_line.c \
 		$(GNL_DIR)get_next_line_utils.c \
 		$(SRCS_DIR)main.c \
-		$(SRCS_DIR)texture_validation.c \
-		$(SRCS_DIR)map_validation.c \
-		$(SRCS_DIR)utils.c \
+		$(VALIDATION_DIR)texture_validation.c \
+		$(VALIDATION_DIR)map_validation.c \
+		$(VALIDATION_DIR)data_validation.c \
+		$(UTILS_DIR)utils.c \
+		$(UTILS_DIR)clean.c \
+		$(SRCS_DIR)raycast.c \
 
 OBJS = $(SRCS:.c=.o)
 
