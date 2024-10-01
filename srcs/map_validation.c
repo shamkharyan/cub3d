@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
+/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:34:31 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/09/27 22:06:22 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/10/01 16:31:43 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	get_map(t_game *g, int fd, char **line)
 {
 	t_list	*head;
 	t_list	*temp;
-	
+
 	while (*line != NULL && is_empty_line(*line))
 	{
 		free(*line);
@@ -108,7 +108,6 @@ static void	get_map(t_game *g, int fd, char **line)
 		free(*line);
 		*line = get_next_line(fd);
 	}
-	free(*line);
 	g->map_height = ft_lstsize(head);
 	temp = head;
 	while (temp != NULL)
@@ -129,4 +128,12 @@ void	check_map(t_game *g, int fd, char **line)
 		error_exit("Wront content of the map\n");
 	if (!check_borders(g))
 		error_exit("Borders aren't closed\n");
+	while (*line != NULL && is_empty_line(*line))
+	{
+		free(*line);
+		*line = get_next_line(fd);
+	}
+	if (*line != NULL)
+		free(*line), error_exit("Content after map\n");
+
 }
