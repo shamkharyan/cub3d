@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:34:31 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/01 18:22:47 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:14:39 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,10 @@ static int	check_borders(t_game *g)
 		{
 			if (g->map[i][j] == '0')
 			{
-				if (i == 0 || i == g->map_height - 1 || j == 0 || j == g->map_width - 1)
-					return (0);
-				if (g->map[i][j + 1] == ' ')
-					return (0);
-				if (g->map[i][j - 1] == ' ')
-					return (0);
-				if (g->map[i + 1][j] == ' ')
-					return (0);
-				if (g->map[i - 1][j] == ' ')
+				if (i == 0 || i == g->map_height - 1
+					|| j == 0 || j == g->map_width - 1
+					|| g->map[i][j + 1] == ' ' || g->map[i][j - 1] == ' '
+					|| g->map[i + 1][j] == ' ' || g->map[i - 1][j] == ' ')
 					return (0);
 			}
 		}
@@ -54,13 +49,15 @@ static int	check_content(t_game *g)
 		j = -1;
 		while (++j < g->map_width)
 		{
-			if (g->map[i][j] == 'N' || g->map[i][j] == 'S' || g->map[i][j] == 'E' || g->map[i][j] == 'W')
+			if (g->map[i][j] == 'N' || g->map[i][j] == 'S'
+				|| g->map[i][j] == 'E' || g->map[i][j] == 'W')
 			{
 				g->player.x = j;
 				g->player.y = i;
 				++player;
 			}
-			else if (g->map[i][j] != '1' && g->map[i][j] != '0' && g->map[i][j] != ' ')
+			else if (g->map[i][j] != '1' && g->map[i][j] != '0'
+				&& g->map[i][j] != ' ')
 				return (0);
 		}
 	}
@@ -81,10 +78,12 @@ static void	parse_map(t_game *g, t_list *head)
 		g->map[i] = (char *) malloc((g->map_width + 1) * sizeof(char));
 		j = -1;
 		while (++j < g->map_width)
+		{
 			if (j < (int) ft_strlen((char *) temp->content))
 				g->map[i][j] = *((char *) temp->content + j);
 			else
 				g->map[i][j] = ' ';
+		}
 		g->map[i][j] = '\0';
 		temp = temp->next;
 	}

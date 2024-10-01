@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:54:18 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/01 18:54:19 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:10:16 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static int	check_colors(t_game *g)
 	g->colors[F - 4].r = ft_atoi(tokens[F - 4][0]);
 	g->colors[C - 4].g = ft_atoi(tokens[F - 4][1]);
 	g->colors[C - 4].b = ft_atoi(tokens[F - 4][2]);
+	free_split(tokens[0]);
+	free_split(tokens[1]);
 	return (1);
 }
 

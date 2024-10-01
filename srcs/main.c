@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:42 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/01 19:05:33 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:09:25 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	main(int argc, char **argv)
 		game_init(&g);
 		if (check_all(&g, argv[1]))
 			printf("OK\n");
+		system("leaks cub3d");
 	}
 	else
 		return (err_msg("Wrong number of arguments.\n"), 1);
