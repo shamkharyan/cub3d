@@ -21,6 +21,8 @@ SRCS = \
 		$(VALIDATION_DIR)data_validation.c \
 		$(UTILS_DIR)utils.c \
 		$(UTILS_DIR)clean.c \
+		$(UTILS_DIR)mlx_utils.c \
+		$(UTILS_DIR)drawing.c \
 		$(SRCS_DIR)raycast.c \
 
 OBJS = $(SRCS:.c=.o)

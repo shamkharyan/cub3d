@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:42 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/01 19:09:25 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/05 15:41:28 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	check_all(t_game *g, char *path)
 	char	*last_line;
 
 	if (ft_strlen(path) <= 4
+		|| !ft_strncmp(path + ft_strlen(path) - 5, "/.cub", 5)
 		|| ft_strncmp(path + ft_strlen(path) - 4, ".cub", 4))
 		return (err_msg("Wrong extention of the map.\n"), 0);
 	fd = open(path, O_RDONLY);
@@ -50,9 +51,10 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		game_init(&g);
-		if (check_all(&g, argv[1]))
-			printf("OK\n");
-		system("leaks cub3d");
+		if (!check_all(&g, argv[1]))
+			return (0);
+		printf("OK\n");
+		start(&g);
 	}
 	else
 		return (err_msg("Wrong number of arguments.\n"), 1);

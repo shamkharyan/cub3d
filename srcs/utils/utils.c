@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:06:57 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/01 19:33:55 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/05 12:21:30 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ int	split_size(char **tokens)
 	while (tokens[i] != NULL)
 		++i;
 	return (i);
-}
-
-void	*xpm2img(t_game *g, char *path)
-{
-	return (mlx_xpm_file_to_image(g->mlx, path, &g->img_width, &g->img_height));
 }
 
 void	err_msg(const char *err)
@@ -73,4 +68,11 @@ void	game_init(t_game *g)
 	g->img_width = IMG_WIDTH;
 	g->map_height = 0;
 	g->map_width = 0;
+}
+
+int	ternary(int condition, int t, int f)
+{
+	if (condition)
+		return (t);
+	return (f);
 }

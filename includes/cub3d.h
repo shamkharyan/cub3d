@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/01 18:49:32 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:48:29 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ typedef struct s_data {
 	int		endian;
 }	t_data;
 
-typedef struct s_cord
+typedef struct s_coord
 {
 	int	x;
 	int	y;
-}	t_cord;
+}	t_coord;
 
 typedef struct s_color
 {
@@ -69,11 +69,12 @@ typedef struct s_game
 	void	*mlx;
 	void	*mlx_win;
 	void	*img[4];
+	t_data	*img_data;
 	char	*data_path[6];
 	int		img_width;
 	int		img_height;
 	t_color	colors[2];
-	t_cord	player;
+	t_coord	player;
 	int		map_width;
 	int		map_height;
 	char	**map;
@@ -91,12 +92,17 @@ void	error_exit(const char *err);
 void	err_msg(const char *err);
 int		str2rgb(char *color);
 int		is_empty_line(char *line);
-void	*xpm2img(t_game *g, char *path);
+int		ternary(int condition, int t, int f);
 
 void	start(t_game *g);
 
 void	clean_map(t_game *g);
 void	clean_data(t_game *g);
 void	clean_mlx(t_game *g);
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	draw_square(t_data *data, t_coord corner, int size, int color);
+void	draw_line(t_data *data, t_coord xy0, t_coord xy1, int color);
+void	*xpm2img(t_game *g, char *path);
 
 #endif
