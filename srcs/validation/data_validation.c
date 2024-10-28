@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:54:18 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/01 19:10:16 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:34:16 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	check_colors(t_game *g)
 	return (1);
 }
 
-static int	check_xml(t_game *g)
+static int	check_xpm(t_game *g)
 {
 	g->mlx = mlx_init();
 	g->img[NO] = xpm2img(g, g->data_path[NO]);
@@ -88,7 +88,7 @@ int	check_data(t_game *g)
 {
 	if (!check_colors(g))
 		return (err_msg("Wrong color format.\n"), 0);
-	if (!check_xml(g))
+	if (!check_xpm(g))
 		return (err_msg("Can't parse images.\n"), 0);
 	return (1);
 }

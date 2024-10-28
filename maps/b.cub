@@ -1,6 +1,12 @@
-NO afaf   
-SO fafaf
-EA fafaf
-WE fafaf
+NO ./textures/wall_ea.xpm
+SO ./textures/wall_ea.xpm
+EA ./textures/wall_ea.xpm
+WE ./textures/wall_ea.xpm
 C 255,255,255
 F 0,0,255
+
+111111111
+100110101
+100011001
+1001010N1
+111111111

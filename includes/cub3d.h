@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/05 14:48:29 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:31:39 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,37 @@ typedef struct s_data {
 	int		endian;
 }	t_data;
 
-typedef struct s_coord
+typedef struct s_icoord
 {
 	int	x;
 	int	y;
-}	t_coord;
+}	t_icoord;
+
+typedef struct s_dcoord
+{
+	double	x;
+	double	y;
+}	t_dcoord;
+
+typedef struct s_raycast
+{
+	t_dcoord	pos;
+	t_dcoord	dir;
+	t_dcoord	plane;
+	double		cameraX;
+	t_dcoord	rayDir;
+	t_icoord	map;
+	t_dcoord	sideDist;
+	t_dcoord	deltaDist;
+	double		perpWallDist;
+	t_icoord	step;
+	int			hit;
+	int			side;
+	int			lineHeight;
+	int			drawStart;
+	int			drawEnd;
+	t_icoord	drawStEn;
+}	t_raycast;
 
 typedef struct s_color
 {
@@ -66,18 +92,19 @@ typedef struct s_color
 
 typedef struct s_game
 {
-	void	*mlx;
-	void	*mlx_win;
-	void	*img[4];
-	t_data	*img_data;
-	char	*data_path[6];
-	int		img_width;
-	int		img_height;
-	t_color	colors[2];
-	t_coord	player;
-	int		map_width;
-	int		map_height;
-	char	**map;
+	void		*mlx;
+	void		*mlx_win;
+	void		*img[4];
+	t_data		*img_data;
+	char		*data_path[6];
+	int			img_width;
+	int			img_height;
+	t_color		colors[2];
+	t_icoord	player;
+	t_raycast	ray;
+	int			map_width;
+	int			map_height;
+	char		**map;
 }	t_game;
 
 int		main(int argc, char **argv);
@@ -88,11 +115,11 @@ int		check_data(t_game *g);
 
 void	free_split(char **tokens);
 int		split_size(char **tokens);
-void	error_exit(const char *err);
+// void	error_exit(const char *err);
 void	err_msg(const char *err);
 int		str2rgb(char *color);
 int		is_empty_line(char *line);
-int		ternary(int condition, int t, int f);
+double	ternary(int condition, double t, double f);
 
 void	start(t_game *g);
 
@@ -101,8 +128,9 @@ void	clean_data(t_game *g);
 void	clean_mlx(t_game *g);
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	draw_square(t_data *data, t_coord corner, int size, int color);
-void	draw_line(t_data *data, t_coord xy0, t_coord xy1, int color);
+// void	draw_square(t_data *data, t_coord corner, int size, int color);
+// void	draw_line(t_data *data, t_coord xy0, t_coord xy1, int color);
+void	draw_vline(t_data *data, int x, t_icoord y12, int color);
 void	*xpm2img(t_game *g, char *path);
 
 #endif

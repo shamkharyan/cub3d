@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:06:57 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/05 12:21:30 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:10:18 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	game_init(t_game *g)
 	g->map_width = 0;
 }
 
-int	ternary(int condition, int t, int f)
+double	ternary(int condition, double t, double f)
 {
 	if (condition)
 		return (t);

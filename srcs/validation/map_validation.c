@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:34:31 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/01 19:14:39 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/05 16:54:31 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ static int	check_borders(t_game *g)
 		j = -1;
 		while (++j < g->map_width)
 		{
-			if (g->map[i][j] == '0')
+			if (g->map[i][j] == '0' || g->map[i][j] == 'N'
+				|| g->map[i][j] == 'S' || g->map[i][j] == 'E'
+				|| g->map[i][j] == 'W')
 			{
 				if (i == 0 || i == g->map_height - 1
 					|| j == 0 || j == g->map_width - 1
