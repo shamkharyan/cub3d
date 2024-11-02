@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 16:36:05 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 18:21:41 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@
 # define SCREEN_W 1024
 # define SCREEN_H 512
 
-# define MOVE_SPEED 1
+# define MOVE_SPEED 0.35
+# define ROT_SPEED 0.1
 
 typedef enum s_textures
 {
@@ -135,7 +136,9 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	draw_vline(t_data *data, int x, t_icoord y12, int color);
 void	*xpm2img(t_game *g, char *path);
 
-int	exit_game(t_game *g);
-int	movement(int keycode, t_game *game);
+int		exit_game(t_game *g);
+int		movement(int keycode, t_game *game);
+int		draw_scene(t_game *g);
+void	clean_scene(t_game *g);
 
 #endif
