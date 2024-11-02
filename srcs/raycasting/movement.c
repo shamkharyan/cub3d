@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 16:04:57 by shamkharyan       #+#    #+#             */
-/*   Updated: 2024/11/02 23:19:50 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 23:51:25 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ int	exit_game(t_game *g)
 
 int	movement(int keycode, t_game *g)
 {
-	if (keycode == KEY_W)
+	if (keycode == KEY_W || keycode == KEY_UP)
 		move(g, NO);
-	else if (keycode == KEY_S)
+	else if (keycode == KEY_S || keycode == KEY_DOWN)
 		move(g, SO);
-	else if (keycode == KEY_A)
+	else if (keycode == KEY_A || keycode == KEY_LEFT)
 		rotate(g, EA);
-	else if (keycode == KEY_D)
+	else if (keycode == KEY_D || keycode == KEY_RIGHT)
 		rotate(g, WE);
 	else if (keycode == KEY_ESC)
 		exit_game(g);

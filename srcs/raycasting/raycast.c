@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:03:53 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 23:00:56 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 23:43:35 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,10 @@ int    draw_scene(t_game *g)
         if ((g->ray.side == 0 && g->ray.rayDir.x > 0) || (g->ray.side == 1 && g->ray.rayDir.y < 0))
             g->ray.tex.x = g->walls[g->ray.texNum].width - g->ray.tex.x - 1;
 
+        y = -1;
+        while (++y < g->ray.drawStart)
+            my_mlx_pixel_put(&g->screen_buff, x, y, g->colors[C - 4]);
+
         y = g->ray.drawStart - 1;
         while (++y < g->ray.drawEnd)
         {
@@ -148,6 +152,10 @@ int    draw_scene(t_game *g)
             g->ray.color = get_texture_color(&g->walls[g->ray.texNum], g->ray.tex.x, g->ray.tex.y);
             my_mlx_pixel_put(&g->screen_buff, x, y, g->ray.color);
         }
+
+        y = g->ray.drawEnd;
+        while (++y < SCREEN_H)
+            my_mlx_pixel_put(&g->screen_buff, x, y, g->colors[F - 4]);
     }
     mlx_put_image_to_window(g->mlx, g->mlx_win, g->screen_buff.img, 0, 0);
     return (0);

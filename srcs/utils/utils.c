@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:06:57 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 22:23:47 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 23:37:40 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,3 +52,9 @@ double	ternary(int condition, double t, double f)
 		return (t);
 	return (f);
 }
+
+int	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
+

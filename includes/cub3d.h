@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 22:36:58 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 23:50:44 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@
 # include <math.h>
 
 # define KEY_W 119 //13
+# define KEY_UP 65362
 # define KEY_S 115 //1
+# define KEY_DOWN 65364
 # define KEY_A 97 //0
+# define KEY_LEFT 65361
 # define KEY_D 100 //2
+# define KEY_RIGHT 65363
 # define KEY_ESC 65307 //53
 
 # define TEXTURE_W 64
@@ -91,13 +95,6 @@ typedef struct s_raycast
 	int			color;
 }	t_raycast;
 
-typedef struct s_color
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_color;
-
 typedef struct s_game
 {
 	void		*mlx;
@@ -107,7 +104,7 @@ typedef struct s_game
 	char		*data_path[6];
 	int			img_width;
 	int			img_height;
-	t_color		colors[2];
+	int			colors[2];
 	t_icoord	player;
 	t_raycast	ray;
 	int			map_width;
@@ -128,6 +125,7 @@ void	err_msg(const char *err);
 int		str2rgb(char *color);
 int		is_empty_line(char *line);
 double	ternary(int condition, double t, double f);
+int		create_trgb(int t, int r, int g, int b);
 
 void	start(t_game *g);
 

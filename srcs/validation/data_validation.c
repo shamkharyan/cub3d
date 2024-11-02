@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:54:18 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 21:24:45 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 23:40:30 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,8 @@ static int	check_colors(t_game *g)
 			if (!check_rgb(tokens[i][j]))
 				return (0);
 	}
-	g->colors[C - 4].r = ft_atoi(tokens[F - 4][0]);
-	g->colors[C - 4].g = ft_atoi(tokens[F - 4][1]);
-	g->colors[C - 4].b = ft_atoi(tokens[F - 4][2]);
-	g->colors[F - 4].r = ft_atoi(tokens[F - 4][0]);
-	g->colors[C - 4].g = ft_atoi(tokens[F - 4][1]);
-	g->colors[C - 4].b = ft_atoi(tokens[F - 4][2]);
+	g->colors[C - 4] = create_trgb(0, ft_atoi(tokens[C - 4][0]), ft_atoi(tokens[C - 4][1]), ft_atoi(tokens[C - 4][2]));
+	g->colors[F - 4] = create_trgb(0, ft_atoi(tokens[F - 4][0]), ft_atoi(tokens[F - 4][1]), ft_atoi(tokens[F - 4][2]));
 	free_split(tokens[0]);
 	free_split(tokens[1]);
 	return (1);
