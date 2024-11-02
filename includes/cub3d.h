@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/28 18:31:39 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/28 22:49:25 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
-# include "../mlx/mlx.h"
+# include <mlx.h>
 # include "get_next_line.h"
 # include <stdio.h>
 # include <fcntl.h>

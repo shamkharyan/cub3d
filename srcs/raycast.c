@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:03:53 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/28 18:51:27 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/28 23:37:38 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,33 @@
 
 void	start(t_game *g)
 {
+    int worldMap[24][24] = {
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+};
+    
 	int	x;
 
 	g->mlx_win = mlx_new_window(g->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
@@ -72,30 +99,30 @@ void	start(t_game *g)
                     g->ray.side = 1;
                 }
 					printf("x = %d, y = %d\n", g->ray.map.x, g->ray.map.y);
-					printf("c = %c\n", g->map[g->ray.map.y][g->ray.map.x]);
-        			if (g->map[g->ray.map.y][g->ray.map.x] == 1)
+					printf("c = %c\n", worldMap[g->ray.map.x][g->ray.map.y]);
+        			if (worldMap[g->ray.map.x][g->ray.map.y] == 1)
 						g->ray.hit = 1;
             }
+            
+            if (g->ray.side == 0)
+				g->ray.perpWallDist = (g->ray.map.x - g->ray.pos.x + (1 - g->ray.step.x) / 2) / g->ray.rayDir.x;
+            else
+				g->ray.perpWallDist = (g->ray.map.y - g->ray.pos.y + (1 - g->ray.step.y) / 2) / g->ray.rayDir.y;
 
-    //         if (g->ray.side == 0)
-	// 			g->ray.perpWallDist = (g->ray.map.x - g->ray.pos.x + (1 - g->ray.step.x) / 2) / g->ray.rayDir.x;
-    //         else
-	// 			g->ray.perpWallDist = (g->ray.map.y - g->ray.pos.y + (1 - g->ray.step.y) / 2) / g->ray.rayDir.y;
+            g->ray.lineHeight = (int)(WIN_HEIGHT / g->ray.perpWallDist);
 
-    //         g->ray.lineHeight = (int)(WIN_HEIGHT / g->ray.perpWallDist);
+            g->ray.drawStEn.x = -g->ray.lineHeight / 2 + WIN_HEIGHT / 2;
+            if (g->ray.drawStEn.x < 0)
+				g->ray.drawStEn.x = 0;
+            g->ray.drawStEn.y = g->ray.lineHeight / 2 + WIN_HEIGHT / 2;
+            if (g->ray.drawStEn.y >= WIN_HEIGHT)
+				g->ray.drawStEn.y = WIN_HEIGHT - 1;
 
-    //         g->ray.drawStart = -g->ray.lineHeight / 2 + WIN_HEIGHT / 2;
-    //         if (g->ray.drawStEn.x < 0)
-	// 			g->ray.drawStEn.x = 0;
-    //         g->ray.drawStEn.y = g->ray.lineHeight / 2 + WIN_HEIGHT / 2;
-    //         if (g->ray.drawStEn.y >= WIN_HEIGHT)
-	// 			g->ray.drawStEn.y = WIN_HEIGHT - 1;
+            int color = 0xFFFFFF;
+            if (g->ray.side == 1)
+				color = color / 2;
 
-    //         int color = 0xFFFFFF;
-    //         if (g->ray.side == 1)
-	// 			color = color / 2;
-
-    //         draw_vline(g->img_data, x, g->ray.drawStEn, color);
+            draw_vline(g->img_data, x, g->ray.drawStEn, color);
         }
 		mlx_loop(g->mlx);
     }

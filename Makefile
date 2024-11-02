@@ -28,20 +28,28 @@ SRCS = \
 OBJS = $(SRCS:.c=.o)
 
 # DEBUG = -fsanitize=address -g
-CFLAGS =  -Wall -Werror -Wextra -Imlx
-MLXFLAGS = -Lmlx -lmlx -framework OpenGl -framework Appkit -lm
+# MacOS
+# CFLAGS =  -Wall -Werror -Wextra -Imlx
+# Linux
+CFLAGS = -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3
+# MacOS
+# MLXFLAGS = -Lmlx -lmlx -framework OpenGl -framework Appkit -lm
+# Linux
+MLXFLAGS = -Lmlx_linux -lmlx -L/usr/lib -Imlx_linux -lXext -lX11
 
 CC = cc
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(OBJS) $(MLXFLAGS) -o $(NAME) $(LIBFT) -lm -lz
+
+$(LIBFT):
 	make -C $(LIBFT_DIR)
 	make -C $(LIBFT_DIR) bonus
-	$(CC) $(DEBUG) $(CFLAGS) $(MLXFLAGS) $(OBJS) -o $(NAME) $(LIBFT)
 
 %.o: %.c Makefile $(INCLUDES_DIR)cub3d.h $(INCLUDES_DIR)get_next_line.h
-	$(CC) $(DEBUG) $(CFLAGS) -c $< -o $@ -I $(INCLUDES_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDES_DIR)
 
 clean:
 	make -C $(LIBFT_DIR) clean

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:06:57 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/28 18:10:18 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/10/28 22:32:23 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ int	split_size(char **tokens)
 
 void	err_msg(const char *err)
 {
-	write(2, "Error: ", 7);
-	write(2, err, ft_strlen(err));
+	int x;
+	x = write(2, "Error: ", 7);
+	x = write(2, err, ft_strlen(err));
+	x += 0;
 }
 
 int	is_empty_line(char *line)
