@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:29:00 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/01 19:02:17 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/11/02 16:10:47 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,12 @@ void	clean_mlx(t_game *g)
 			g->img[i] = NULL;
 		}
 	}
+	if (g->screen_buff.img != NULL)
+	{
+		mlx_destroy_image(g->mlx, g->screen_buff.img);
+		g->screen_buff.img = NULL;
+		g->screen_buff.addr = NULL;
+	}
 }
+
+

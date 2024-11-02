@@ -7,6 +7,8 @@
 #define mapWidth 24
 #define mapHeight 24
 
+//gcc raycaster.c -Lmlx_linux -lmlx -L/usr/lib -Imlx_linux -lXext -lX11
+
 int worldMap[mapWidth][mapHeight] = {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -50,8 +52,8 @@ int main(void) {
     data.mlx = mlx_init();
     data.win = mlx_new_window(data.mlx, screenWidth, screenHeight, "Raycaster");
 
-    double posX = 22, posY = 12;
-    double dirX = -1, dirY = 0;
+    double posX = 12, posY = 12;
+    double dirX = 0, dirY = -1;
     double planeX = 0, planeY = 0.66;
 
     while (1) {

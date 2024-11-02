@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:42 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/28 18:01:29 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/11/02 14:37:12 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int	check_all(t_game *g, char *path)
 	int		fd;
 	char	*last_line;
 
-	if (ft_strlen(path) <= 4
-		|| !ft_strncmp(path + ft_strlen(path) - 5, "/.cub", 5)
-		|| ft_strncmp(path + ft_strlen(path) - 4, ".cub", 4))
+	if (!check_extention(path))
 		return (err_msg("Wrong extention of the map.\n"), 0);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)

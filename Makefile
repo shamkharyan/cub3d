@@ -9,6 +9,7 @@ SRCS_DIR = ./srcs/
 GNL_DIR = gnl/
 VALIDATION_DIR = $(SRCS_DIR)validation/
 UTILS_DIR = $(SRCS_DIR)utils/
+RAYCASTING_DIR = $(SRCS_DIR)raycasting/
 
 INCLUDES_DIR = ./includes/
 
@@ -19,11 +20,12 @@ SRCS = \
 		$(VALIDATION_DIR)texture_validation.c \
 		$(VALIDATION_DIR)map_validation.c \
 		$(VALIDATION_DIR)data_validation.c \
+		$(VALIDATION_DIR)validation_utils.c \
 		$(UTILS_DIR)utils.c \
 		$(UTILS_DIR)clean.c \
-		$(UTILS_DIR)mlx_utils.c \
-		$(UTILS_DIR)drawing.c \
-		$(SRCS_DIR)raycast.c \
+		$(RAYCASTING_DIR)raycasting_utils.c \
+		$(RAYCASTING_DIR)raycast.c \
+		$(RAYCASTING_DIR)movement.c \
 
 OBJS = $(SRCS:.c=.o)
 

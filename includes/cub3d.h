@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/28 22:49:25 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 16:36:05 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,19 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define KEY_W 13
-# define KEY_S 1
-# define KEY_A 0
-# define KEY_D 2
-# define KEY_ESC 53
+# define KEY_W 119 //13
+# define KEY_S 115 //1
+# define KEY_A 97 //0
+# define KEY_D 100 //2
+# define KEY_ESC 65307 //53
 
-# define IMG_WIDTH 64
-# define IMG_HEIGHT 64
+# define TEXTURE_W 64
+# define TEXTURE_H 64
 
-# define WIN_WIDTH 1024
-# define WIN_HEIGHT 512
+# define SCREEN_W 1024
+# define SCREEN_H 512
+
+# define MOVE_SPEED 1
 
 typedef enum s_textures
 {
@@ -80,7 +82,6 @@ typedef struct s_raycast
 	int			lineHeight;
 	int			drawStart;
 	int			drawEnd;
-	t_icoord	drawStEn;
 }	t_raycast;
 
 typedef struct s_color
@@ -95,7 +96,7 @@ typedef struct s_game
 	void		*mlx;
 	void		*mlx_win;
 	void		*img[4];
-	t_data		*img_data;
+	t_data		screen_buff;
 	char		*data_path[6];
 	int			img_width;
 	int			img_height;
@@ -109,6 +110,7 @@ typedef struct s_game
 
 int		main(int argc, char **argv);
 void	game_init(t_game *g);
+int		check_extention(char *path);
 int		check_textures(t_game *g, int fd, char **line);
 int		check_map(t_game *g, int fd, char **line);
 int		check_data(t_game *g);
@@ -132,5 +134,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 // void	draw_line(t_data *data, t_coord xy0, t_coord xy1, int color);
 void	draw_vline(t_data *data, int x, t_icoord y12, int color);
 void	*xpm2img(t_game *g, char *path);
+
+int	exit_game(t_game *g);
+int	movement(int keycode, t_game *game);
 
 #endif
