@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:29:00 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 16:10:47 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 21:21:41 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ void	clean_mlx(t_game *g)
 	i = -1;
 	while (++i < 4)
 	{
-		if (g->img[i] != NULL)
+		if (g->walls[i].img != NULL)
 		{
-			mlx_destroy_image(g->mlx, g->img[i]);
-			g->img[i] = NULL;
+			mlx_destroy_image(g->mlx, g->walls[i].img);
+			g->walls[i].img = NULL;
+			g->walls[i].addr = NULL;
 		}
 	}
 	if (g->screen_buff.img != NULL)

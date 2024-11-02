@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 18:21:41 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 22:36:58 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@
 # define TEXTURE_H 64
 
 # define SCREEN_W 1024
-# define SCREEN_H 512
+# define SCREEN_H 720
 
 # define MOVE_SPEED 0.35
 # define ROT_SPEED 0.1
 
-typedef enum s_textures
+typedef enum s_directions
 {
 	NO,
 	SO,
@@ -44,15 +44,17 @@ typedef enum s_textures
 	EA,
 	C,
 	F
-}	t_textures;
+}	t_directions;
 
-typedef struct s_data {
+typedef struct s_textures {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
+	int		width;
+	int		height;
 	int		endian;
-}	t_data;
+}	t_textures;
 
 typedef struct s_icoord
 {
@@ -83,6 +85,10 @@ typedef struct s_raycast
 	int			lineHeight;
 	int			drawStart;
 	int			drawEnd;
+	int			texNum;
+	double		wallX;
+	t_icoord	tex;
+	int			color;
 }	t_raycast;
 
 typedef struct s_color
@@ -96,8 +102,8 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*mlx_win;
-	void		*img[4];
-	t_data		screen_buff;
+	t_textures	walls[4];
+	t_textures	screen_buff;
 	char		*data_path[6];
 	int			img_width;
 	int			img_height;
@@ -118,7 +124,6 @@ int		check_data(t_game *g);
 
 void	free_split(char **tokens);
 int		split_size(char **tokens);
-// void	error_exit(const char *err);
 void	err_msg(const char *err);
 int		str2rgb(char *color);
 int		is_empty_line(char *line);
@@ -130,15 +135,14 @@ void	clean_map(t_game *g);
 void	clean_data(t_game *g);
 void	clean_mlx(t_game *g);
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-// void	draw_square(t_data *data, t_coord corner, int size, int color);
-// void	draw_line(t_data *data, t_coord xy0, t_coord xy1, int color);
-void	draw_vline(t_data *data, int x, t_icoord y12, int color);
+void	my_mlx_pixel_put(t_textures *data, int x, int y, int color);
+void	draw_vline(t_textures *data, int x, t_icoord y12, int color);
 void	*xpm2img(t_game *g, char *path);
 
 int		exit_game(t_game *g);
 int		movement(int keycode, t_game *game);
 int		draw_scene(t_game *g);
 void	clean_scene(t_game *g);
+int 	get_texture_color(t_textures *texture, int x, int y);
 
 #endif

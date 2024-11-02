@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:06:57 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 16:08:50 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 22:23:47 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	game_init(t_game *g)
 	i = -1;
 	while (++i < 4)
 	{
-		g->img[i] = NULL;
+		g->walls[i].img = NULL;
+		g->walls[i].addr = NULL;
+		g->walls[i].width = TEXTURE_W;
+		g->walls[i].height = TEXTURE_H;
 		g->data_path[i] = NULL;
 	}
 	g->data_path[4] = NULL;

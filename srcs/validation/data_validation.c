@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_validation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:54:18 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/28 17:34:16 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/11/02 21:24:45 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,25 @@ static int	check_colors(t_game *g)
 
 static int	check_xpm(t_game *g)
 {
+	int	i;
+	
 	g->mlx = mlx_init();
-	g->img[NO] = xpm2img(g, g->data_path[NO]);
-	if (g->img[NO] == NULL)
+	g->walls[NO].img = xpm2img(g, g->data_path[NO]);
+	if (g->walls[NO].img == NULL)
 		return (0);
-	g->img[SO] = xpm2img(g, g->data_path[SO]);
-	if (g->img[SO] == NULL)
+	g->walls[SO].img = xpm2img(g, g->data_path[SO]);
+	if (g->walls[SO].img == NULL)
 		return (0);
-	g->img[EA] = xpm2img(g, g->data_path[EA]);
-	if (g->img[EA] == NULL)
+	g->walls[EA].img = xpm2img(g, g->data_path[EA]);
+	if (g->walls[EA].img == NULL)
 		return (0);
-	g->img[WE] = xpm2img(g, g->data_path[WE]);
-	if (g->img[WE] == NULL)
+	g->walls[WE].img = xpm2img(g, g->data_path[WE]);
+	if (g->walls[WE].img == NULL)
 		return (0);
+	i = -1;
+	while (++i < 4)
+		g->walls[i].addr = mlx_get_data_addr(g->walls[i].img, &g->walls[i].bits_per_pixel,
+			&g->walls[i].line_length, &g->walls[i].endian);
 	return (1);
 }
 

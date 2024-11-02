@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:03:53 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 18:07:27 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 23:00:56 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	clean_scene(t_game *g)
 int    draw_scene(t_game *g)
 {
     int x;
+    int y;
     
     x = -1;
     while (++x < SCREEN_W)
@@ -125,11 +126,28 @@ int    draw_scene(t_game *g)
         g->ray.drawEnd = g->ray.lineHeight / 2 + SCREEN_H / 2;
         if (g->ray.drawEnd >= SCREEN_H)
 		g->ray.drawEnd = SCREEN_H - 1;
-
-        int color = 0x00FFFFFF;
+    
+        //textures
         if (g->ray.side == 1)
-    		color = color / 2;
-        draw_vline(&g->screen_buff, x, (t_icoord){g->ray.drawStart, g->ray.drawEnd}, color);
+            g->ray.texNum = ternary(g->ray.rayDir.y > 0, 1, 0);
+        else
+            g->ray.texNum = ternary(g->ray.rayDir.x > 0, 2, 3);
+        if (g->ray.side == 0)
+            g->ray.wallX = g->ray.pos.y + g->ray.perpWallDist * g->ray.rayDir.y;
+        else
+            g->ray.wallX = g->ray.pos.x + g->ray.perpWallDist * g->ray.rayDir.x;
+        g->ray.wallX -= floor(g->ray.wallX);
+        g->ray.tex.x = (int)(g->ray.wallX * (double)(g->walls[g->ray.texNum].width));
+        if ((g->ray.side == 0 && g->ray.rayDir.x > 0) || (g->ray.side == 1 && g->ray.rayDir.y < 0))
+            g->ray.tex.x = g->walls[g->ray.texNum].width - g->ray.tex.x - 1;
+
+        y = g->ray.drawStart - 1;
+        while (++y < g->ray.drawEnd)
+        {
+            g->ray.tex.y = (int)(((y - SCREEN_H / 2 + g->ray.lineHeight / 2) * g->walls[g->ray.texNum].height) / g->ray.lineHeight);
+            g->ray.color = get_texture_color(&g->walls[g->ray.texNum], g->ray.tex.x, g->ray.tex.y);
+            my_mlx_pixel_put(&g->screen_buff, x, y, g->ray.color);
+        }
     }
     mlx_put_image_to_window(g->mlx, g->mlx_win, g->screen_buff.img, 0, 0);
     return (0);

@@ -6,7 +6,7 @@
 /*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 16:04:57 by shamkharyan       #+#    #+#             */
-/*   Updated: 2024/11/02 18:20:32 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/02 23:19:50 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,25 @@
 
 void	move(t_game *g, int direction)
 {
+	t_icoord	new;
+	
 	if (direction == NO)
 	{
-		if (g->map[(int) (g->ray.pos.y + g->ray.dir.y * MOVE_SPEED)][(int) g->ray.pos.x] == '0')
-			g->ray.pos.x += g->ray.dir.x * MOVE_SPEED;
-		if (g->map[(int) g->ray.pos.y][(int) (g->ray.pos.x + g->ray.dir.x * MOVE_SPEED)] == '0')
+		new.x = (int)(g->ray.pos.x + g->ray.dir.x * MOVE_SPEED);
+		new.y = (int)(g->ray.pos.y + g->ray.dir.y * MOVE_SPEED);
+		if (new.y >= 0 && new.y < g->map_height && g->map[new.y][(int)g->ray.pos.x] == '0')
 			g->ray.pos.y += g->ray.dir.y * MOVE_SPEED;
+		if (new.x >= 0 && new.x < g->map_width && g->map[(int)g->ray.pos.y][new.x] == '0')
+			g->ray.pos.x += g->ray.dir.x * MOVE_SPEED;
 	}
 	else if (direction == SO)
 	{
-		if (g->map[(int) (g->ray.pos.y - g->ray.dir.y * MOVE_SPEED)][(int) g->ray.pos.x] == '0')
-			g->ray.pos.x -= g->ray.dir.x * MOVE_SPEED;
-		if (g->map[(int) g->ray.pos.y][(int) (g->ray.pos.x - g->ray.dir.x * MOVE_SPEED)] == '0')
+		new.x = (int)(g->ray.pos.x - g->ray.dir.x * MOVE_SPEED);
+		new.y = (int)(g->ray.pos.y - g->ray.dir.y * MOVE_SPEED);
+		if (new.y >= 0 && new.y < g->map_height && g->map[new.y][(int)g->ray.pos.x] == '0')
 			g->ray.pos.y -= g->ray.dir.y * MOVE_SPEED;
+		if (new.x >= 0 && new.x < g->map_width && g->map[(int)g->ray.pos.y][new.x] == '0')
+			g->ray.pos.x -= g->ray.dir.x * MOVE_SPEED;
 	}
 }
 
