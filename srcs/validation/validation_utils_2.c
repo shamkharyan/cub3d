@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   validation_utils_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/21 19:06:57 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/09 16:04:36 by pshamkha         ###   ########.fr       */
+/*   Created: 2024/11/09 16:28:54 by pshamkha          #+#    #+#             */
+/*   Updated: 2024/11/09 16:29:38 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,56 @@ void	game_init(t_game *g)
 	g->map = NULL;
 	g->screen_buff.img = NULL;
 	g->screen_buff.addr = NULL;
-	g->img_height = TEXTURE_H;
-	g->img_width = TEXTURE_W;
+	g->tex_height = TEXTURE_H;
+	g->tex_width = TEXTURE_W;
 	g->map_height = 0;
 	g->map_width = 0;
 }
 
-double	ternary(int condition, double t, double f)
+void	clean_map(t_game *g)
 {
-	if (condition)
-		return (t);
-	return (f);
+	int	i;
+
+	i = -1;
+	while (++i < g->map_height)
+	{
+		free(g->map[i]);
+		g->map[i] = NULL;
+	}
+	free(g->map);
+	g->map = NULL;
 }
 
-int	create_trgb(int t, int r, int g, int b)
+void	clean_data(t_game *g)
 {
-	return (t << 24 | r << 16 | g << 8 | b);
+	int	i;
+
+	i = -1;
+	while (++i < 6)
+	{
+		free(g->map_data[i]);
+		g->map_data[i] = NULL;
+	}
 }
 
+void	clean_mlx(t_game *g)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		if (g->walls[i].img != NULL)
+		{
+			mlx_destroy_image(g->mlx, g->walls[i].img);
+			g->walls[i].img = NULL;
+			g->walls[i].addr = NULL;
+		}
+	}
+	if (g->screen_buff.img != NULL)
+	{
+		mlx_destroy_image(g->mlx, g->screen_buff.img);
+		g->screen_buff.img = NULL;
+		g->screen_buff.addr = NULL;
+	}
+}

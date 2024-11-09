@@ -1,100 +1,76 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data_validation.c                                  :+:      :+:    :+:   */
+/*   texture_validation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 18:54:18 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/09 16:14:16 by pshamkha         ###   ########.fr       */
+/*   Created: 2024/08/21 13:01:22 by pshamkha          #+#    #+#             */
+/*   Updated: 2024/11/09 16:04:12 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	check_commas(char *color)
+static int	check_token(t_game *g, char **tokens, int *tokens_count)
 {
 	int	i;
-	int	count;
 
-	i = -1;
-	count = 0;
-	while (color[++i] != '\0')
-		if (color[i] == ',')
-			++count;
-	return (count == 2);
-}
-
-static int	check_rgb(char *color)
-{
-	int	rgb;
-
-	if (ft_strlen(color) > 3)
-		return (0);
-	rgb = ft_atoi(color);
-	if (rgb >= 0 && rgb <= 255)
-		return (1);
-	return (0);
-}
-
-static int	check_colors(t_game *g)
-{
-	char	**clrs[2];
-	int		i;
-	int		j;
-
-	if (!check_commas(g->map_data[F]) || !check_commas(g->map_data[C]))
-		return (0);
-	clrs[0] = ft_split(g->map_data[C], ',');
-	clrs[1] = ft_split(g->map_data[F], ',');
-	i = -1;
-	while (++i < 2)
+	if (split_size(tokens) == 2)
 	{
-		j = -1;
-		while (++j < 3)
-			if (!check_rgb(clrs[i][j]))
-			{
-				free_split(clrs[0]);
-				free_split(clrs[1]);
-				return (0);
-			}
+		i = -1;
+		if (!ft_strncmp(tokens[0], "NO", ft_strlen(tokens[0])))
+			i = 0;
+		else if (!ft_strncmp(tokens[0], "SO", ft_strlen(tokens[0])))
+			i = 1;
+		else if (!ft_strncmp(tokens[0], "WE", ft_strlen(tokens[0])))
+			i = 2;
+		else if (!ft_strncmp(tokens[0], "EA", ft_strlen(tokens[0])))
+			i = 3;
+		else if (!ft_strncmp(tokens[0], "C", ft_strlen(tokens[0])))
+			i = 4;
+		else if (!ft_strncmp(tokens[0], "F", ft_strlen(tokens[0])))
+			i = 5;
+		if (i != -1 && ++tokens_count[i] == 1)
+			g->map_data[i] = ft_strdup(tokens[1]);
+		return (i);
 	}
-	g->colors[0] = create_trgb(0, ft_atoi(clrs[0][0]), ft_atoi(clrs[0][1]), ft_atoi(clrs[0][2]));
-	g->colors[1] = create_trgb(0, ft_atoi(clrs[1][0]), ft_atoi(clrs[1][1]), ft_atoi(clrs[1][2]));
-	free_split(clrs[0]);
-	free_split(clrs[1]);
-	return (1);
+	return (-1);
 }
 
-static int	check_xpm(t_game *g)
+static int	check_token_count(int *tokens_count)
 {
 	int	i;
 
-	g->mlx = mlx_init();
-	g->walls[NO].img = xpm2img(g, g->map_data[NO]);
-	if (g->walls[NO].img == NULL)
-		return (0);
-	g->walls[SO].img = xpm2img(g, g->map_data[SO]);
-	if (g->walls[SO].img == NULL)
-		return (0);
-	g->walls[EA].img = xpm2img(g, g->map_data[EA]);
-	if (g->walls[EA].img == NULL)
-		return (0);
-	g->walls[WE].img = xpm2img(g, g->map_data[WE]);
-	if (g->walls[WE].img == NULL)
-		return (0);
-	i = -1;
-	while (++i < 4)
-		g->walls[i].addr = mlx_get_data_addr(g->walls[i].img, &g->walls[i].bits_per_pixel,
-			&g->walls[i].line_length, &g->walls[i].endian);
+	i = 0;
+	while (i < 6)
+		if (tokens_count[i++] != 1)
+			return (0);
 	return (1);
 }
 
-int	check_data(t_game *g)
+//If returns 0, need to clean map_data
+int	check_textures(t_game *g, int fd, char **line)
 {
-	if (!check_colors(g))
-		return (err_msg("Wrong color format.\n"), 0);
-	if (!check_xpm(g))
-		return (err_msg("Can't parse images.\n"), 0);
-	return (1);
+	char	*new_line;
+	char	**tokens;
+	int		tokens_count[6];
+
+	*line = get_next_line(fd);
+	ft_bzero(tokens_count, 6 * sizeof(int));
+	while (*line != NULL && !check_token_count(tokens_count))
+	{
+		new_line = ft_strtrim(*line, " \n");
+		free(*line);
+		if (*new_line != '\0')
+		{
+			tokens = ft_split(new_line, ' ');
+			if (check_token(g, tokens, tokens_count) == -1)
+				return (free_split(tokens), free(new_line), 0);
+			free_split(tokens);
+		}
+		free(new_line);
+		*line = get_next_line(fd);
+	}
+	return (check_token_count(tokens_count));
 }

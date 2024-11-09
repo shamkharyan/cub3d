@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
+/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:42 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 14:37:12 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/09 17:40:28 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,21 @@ int	check_all(t_game *g, char *path)
 		return (err_msg("Can't open file or file not exist.\n"), 0);
 	if (!check_textures(g, fd, &last_line))
 	{
-		err_msg("Wrong token name or count.\n"), close(fd);
-		return (clean_data(g), 0);
+		err_msg("Wrong token name or count.\n");
+		clean_data(g);
+		return (close(fd), 0);
 	}
 	if (!check_map(g, fd, &last_line))
 	{
-		clean_map(g), close(fd);
-		return (clean_data(g), 0);
+		clean_map(g);
+		clean_data(g);
+		return (close(fd), 0);
 	}
 	if (!check_data(g))
 	{
-		clean_map(g), clean_mlx(g), close(fd);
+		clean_map(g);
+		clean_mlx(g);
+		close(fd);
 		return (clean_data(g), 0);
 	}
 	close(fd);

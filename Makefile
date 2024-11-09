@@ -20,9 +20,8 @@ SRCS = \
 		$(VALIDATION_DIR)texture_validation.c \
 		$(VALIDATION_DIR)map_validation.c \
 		$(VALIDATION_DIR)data_validation.c \
-		$(VALIDATION_DIR)validation_utils.c \
-		$(UTILS_DIR)utils.c \
-		$(UTILS_DIR)clean.c \
+		$(VALIDATION_DIR)validation_utils_1.c \
+		$(VALIDATION_DIR)validation_utils_2.c \
 		$(RAYCASTING_DIR)raycasting_utils.c \
 		$(RAYCASTING_DIR)raycast.c \
 		$(RAYCASTING_DIR)movement.c \

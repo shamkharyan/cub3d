@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
+/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:40:34 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 22:12:09 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/09 16:27:43 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,16 @@ int get_texture_color(t_textures *texture, int x, int y)
     color = *(unsigned int *)pixel;
 
     return color;
+}
+
+double	ternary(int condition, double t, double f)
+{
+	if (condition)
+		return (t);
+	return (f);
+}
+
+int	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
 }

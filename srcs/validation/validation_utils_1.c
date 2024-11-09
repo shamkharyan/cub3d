@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 14:28:55 by shamkharyan       #+#    #+#             */
-/*   Updated: 2024/11/07 17:05:20 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/11/09 16:26:37 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ int	is_empty_line(char *line)
 
 void	*xpm2img(t_game *g, char *path)
 {
-	return (mlx_xpm_file_to_image(g->mlx, path, &g->img_width, &g->img_height));
+	return (mlx_xpm_file_to_image(g->mlx, path, &g->tex_width, &g->tex_height));
 }

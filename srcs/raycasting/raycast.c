@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:03:53 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/09 15:37:56 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:59:27 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static void set_start_values(t_game *g)
     g->screen_buff.img = mlx_new_image(g->mlx, SCREEN_W, SCREEN_H);
     g->screen_buff.addr = mlx_get_data_addr(g->screen_buff.img,
         &g->screen_buff.bits_per_pixel, &g->screen_buff.line_length, &g->screen_buff.endian);
-    g->ray.pos.x = g->player.x;
-	g->ray.pos.y = g->player.y;
+    g->ray.pos.x = g->player.x + 0.5;
+	g->ray.pos.y = g->player.y + 0.5;
 	g->ray.plane.x = 0;
 	g->ray.plane.y = 0;
 	g->ray.dir.x = 0;
@@ -80,8 +80,8 @@ int    draw_scene(t_game *g)
 		g->ray.hit = 0;
         if (g->ray.ray_dir.x < 0)
 		{
-        g->ray.step.x = -1;
-        g->ray.side_dist.x = (g->ray.pos.x - g->ray.map.x) * g->ray.delta_dist.x;
+        	g->ray.step.x = -1;
+        	g->ray.side_dist.x = (g->ray.pos.x - g->ray.map.x) * g->ray.delta_dist.x;
         }
 		else
 		{
@@ -144,7 +144,7 @@ int    draw_scene(t_game *g)
 
         y = -1;
         while (++y < g->ray.draw_start)
-            my_mlx_pixel_put(&g->screen_buff, x, y, g->colors[C - 4]);
+            my_mlx_pixel_put(&g->screen_buff, x, y, g->colors[0]);
 
         y = g->ray.draw_start - 1;
         while (++y < g->ray.draw_end)
@@ -156,7 +156,7 @@ int    draw_scene(t_game *g)
 
         y = g->ray.draw_end;
         while (++y < SCREEN_H)
-            my_mlx_pixel_put(&g->screen_buff, x, y, g->colors[F - 4]);
+            my_mlx_pixel_put(&g->screen_buff, x, y, g->colors[1]);
     }
     mlx_put_image_to_window(g->mlx, g->mlx_win, g->screen_buff.img, 0, 0);
     return (0);

@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/09 16:03:41 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:41:32 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 
 # define MOVE_SPEED 0.35
 # define ROT_SPEED 0.1
-# define MOUSE_ROT_SPEED 0.01
+# define MOUSE_ROT_SPEED 0.005
 
 typedef enum s_directions
 {
@@ -117,8 +117,8 @@ typedef struct s_game
 	t_textures	walls[4];
 	t_textures	screen_buff;
 	char		*map_data[6];
-	int			img_width;
-	int			img_height;
+	int			tex_width;
+	int			tex_height;
 	int			colors[2];
 	t_icoord	player;
 	t_raycast	ray;
