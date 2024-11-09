@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
+/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:29:00 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 21:21:41 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/09 16:04:45 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	clean_data(t_game *g)
 	i = -1;
 	while (++i < 6)
 	{
-		free(g->data_path[i]);
-		g->data_path[i] = NULL;
+		free(g->map_data[i]);
+		g->map_data[i] = NULL;
 	}
 }
 

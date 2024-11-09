@@ -31,20 +31,20 @@ OBJS = $(SRCS:.c=.o)
 
 # DEBUG = -fsanitize=address -g
 # MacOS
-# CFLAGS =  -Wall -Werror -Wextra -Imlx
+CFLAGS =  -Wall -Werror -Wextra -Imlx
 # Linux
-CFLAGS = -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3
+# CFLAGS = -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3
 # MacOS
-# MLXFLAGS = -Lmlx -lmlx -framework OpenGl -framework Appkit -lm
+MLXFLAGS = -Lmlx -lmlx -framework OpenGl -framework Appkit -lm
 # Linux
-MLXFLAGS = -Lmlx_linux -lmlx -L/usr/lib -Imlx_linux -lXext -lX11
-
+# MLXFLAGS = -Lmlx_linux -lmlx -L/usr/lib -Imlx_linux -lXext -lX11
+# -lm -lz
 CC = cc
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(OBJS) $(MLXFLAGS) -o $(NAME) $(LIBFT) -lm -lz
+	$(CC) $(OBJS) $(MLXFLAGS) -o $(NAME) $(LIBFT)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)

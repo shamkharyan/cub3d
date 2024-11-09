@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
+/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:06:57 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/02 23:37:40 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/09 16:04:36 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	err_msg(const char *err)
 {
-	int x;
-	x = write(2, "Error: ", 7);
-	x = write(2, err, ft_strlen(err));
-	x += 0;
+	write(2, "Error: ", 7);
+	write(2, err, ft_strlen(err));
 }
 
 void	game_init(t_game *g)
@@ -31,10 +29,10 @@ void	game_init(t_game *g)
 		g->walls[i].addr = NULL;
 		g->walls[i].width = TEXTURE_W;
 		g->walls[i].height = TEXTURE_H;
-		g->data_path[i] = NULL;
+		g->map_data[i] = NULL;
 	}
-	g->data_path[4] = NULL;
-	g->data_path[5] = NULL;
+	g->map_data[4] = NULL;
+	g->map_data[5] = NULL;
 	g->mlx = NULL;
 	g->mlx_win = NULL;
 	g->map = NULL;

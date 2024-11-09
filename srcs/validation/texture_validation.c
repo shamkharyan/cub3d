@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:22 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/01 18:17:43 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/11/09 16:04:12 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	check_token(t_game *g, char **tokens, int *tokens_count)
 		else if (!ft_strncmp(tokens[0], "F", ft_strlen(tokens[0])))
 			i = 5;
 		if (i != -1 && ++tokens_count[i] == 1)
-			g->data_path[i] = ft_strdup(tokens[1]);
+			g->map_data[i] = ft_strdup(tokens[1]);
 		return (i);
 	}
 	return (-1);
@@ -49,7 +49,7 @@ static int	check_token_count(int *tokens_count)
 	return (1);
 }
 
-//If returns 0, need to clean data_path
+//If returns 0, need to clean map_data
 int	check_textures(t_game *g, int fd, char **line)
 {
 	char	*new_line;

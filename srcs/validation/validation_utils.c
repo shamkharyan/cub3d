@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   validation_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
+/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 14:28:55 by shamkharyan       #+#    #+#             */
-/*   Updated: 2024/11/02 14:49:24 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/11/07 17:05:20 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		check_extention(char *path)
+int	check_extention(char *path)
 {
 	if (ft_strlen(path) <= 4
 		|| !ft_strncmp(path + ft_strlen(path) - 5, "/.cub", 5)

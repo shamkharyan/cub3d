@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:34:31 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/10/05 16:54:31 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/11/09 16:04:08 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static void	get_map(t_game *g, int fd, char **line)
 	parse_map(g, head);
 }
 
-//If fails, need to clean data_path and map
+//If fails, need to clean map_data and map
 int	check_map(t_game *g, int fd, char **line)
 {
 	get_map(g, fd, line);
