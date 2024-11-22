@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/09 17:41:32 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:34:24 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,26 @@
 # include <math.h>
 
 //Linux
-// # define KEY_W 119
-// # define KEY_UP 65362
-// # define KEY_S 115
-// # define KEY_DOWN 65364
-// # define KEY_A 97
-// # define KEY_LEFT 65361
-// # define KEY_D 100
-// # define KEY_RIGHT 65363
-// # define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_UP 65362
+# define KEY_S 115
+# define KEY_DOWN 65364
+# define KEY_A 97
+# define KEY_LEFT 65361
+# define KEY_D 100
+# define KEY_RIGHT 65363
+# define KEY_ESC 65307
 
 //MacOS
-# define KEY_W 13
-# define KEY_UP 126
-# define KEY_S 1
-# define KEY_DOWN 125
-# define KEY_A 0
-# define KEY_LEFT 123
-# define KEY_D 2
-# define KEY_RIGHT 124
-# define KEY_ESC 53
+// # define KEY_W 13
+// # define KEY_UP 126
+// # define KEY_S 1
+// # define KEY_DOWN 125
+// # define KEY_A 0
+// # define KEY_LEFT 123
+// # define KEY_D 2
+// # define KEY_RIGHT 124
+// # define KEY_ESC 53
 
 # define TEXTURE_W 64
 # define TEXTURE_H 64
@@ -158,5 +158,6 @@ int		draw_scene(t_game *g);
 void	clean_scene(t_game *g);
 int		get_texture_color(t_textures *texture, int x, int y);
 int		mouse_rotate(int x, int y, t_game *g);
+void 	draw_minimap(t_game *g);
 
 #endif

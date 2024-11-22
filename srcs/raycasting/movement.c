@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 16:04:57 by shamkharyan       #+#    #+#             */
-/*   Updated: 2024/11/09 18:23:53 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:41:32 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,11 @@ int	movement(int keycode, t_game *g)
 	else if (keycode == KEY_S || keycode == KEY_DOWN)
 		move(g, SO);
 	else if (keycode == KEY_A || keycode == KEY_LEFT)
-		move(g, EA);
+		// move(g, EA);
+		rotate(g, EA, ROT_SPEED);
 	else if (keycode == KEY_D || keycode == KEY_RIGHT)
-		move(g, WE);
+		// move(g, WE);
+		rotate(g, WE, ROT_SPEED);
 	else if (keycode == KEY_ESC)
 		exit_game(g);
 	clean_scene(g);

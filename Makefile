@@ -25,6 +25,7 @@ SRCS = \
 		$(RAYCASTING_DIR)raycasting_utils.c \
 		$(RAYCASTING_DIR)raycast.c \
 		$(RAYCASTING_DIR)movement.c \
+		$(RAYCASTING_DIR)minimap.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -34,16 +35,16 @@ CFLAGS =  -Wall -Werror -Wextra -Imlx
 # Linux
 # CFLAGS = -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3
 # MacOS
-MLXFLAGS = -Lmlx -lmlx -framework OpenGl -framework Appkit -lm
+# MLXFLAGS = -Lmlx -lmlx -framework OpenGl -framework Appkit -lm
 # Linux
-# MLXFLAGS = -Lmlx_linux -lmlx -L/usr/lib -Imlx_linux -lXext -lX11
-# -lm -lz
+MLXFLAGS = -Lmlx_linux -lmlx -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+
 CC = cc
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(OBJS) $(MLXFLAGS) -o $(NAME) $(LIBFT)
+	$(CC) $(OBJS) $(MLXFLAGS) -o $(NAME) $(LIBFT) 
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)

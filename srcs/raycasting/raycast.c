@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:03:53 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/09 17:59:27 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:34:58 by shamkharyan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ int    draw_scene(t_game *g)
         while (++y < SCREEN_H)
             my_mlx_pixel_put(&g->screen_buff, x, y, g->colors[1]);
     }
+    draw_minimap(g);
     mlx_put_image_to_window(g->mlx, g->mlx_win, g->screen_buff.img, 0, 0);
     return (0);
 }
