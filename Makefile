@@ -22,7 +22,8 @@ SRCS = \
 		$(VALIDATION_DIR)data_validation.c \
 		$(VALIDATION_DIR)validation_utils_1.c \
 		$(VALIDATION_DIR)validation_utils_2.c \
-		$(RAYCASTING_DIR)raycasting_utils.c \
+		$(RAYCASTING_DIR)raycasting_utils_1.c \
+		$(RAYCASTING_DIR)raycasting_utils_2.c \
 		$(RAYCASTING_DIR)raycast.c \
 		$(RAYCASTING_DIR)movement.c \
 		$(RAYCASTING_DIR)minimap.c \

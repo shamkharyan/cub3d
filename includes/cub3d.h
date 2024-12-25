@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/12/25 16:02:05 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/25 18:53:27 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 # define KEY_D 2
 # define KEY_RIGHT 124
 # define KEY_ESC 53
+# define KEY_Q 12
+# define KEY_E 14
 
 # define TEXTURE_W 64
 # define TEXTURE_H 64
@@ -88,7 +90,7 @@ typedef struct s_vector2f
 
 typedef struct s_minimap
 {
-	int 		scale;
+	int			scale;
 	t_vector2i	offset;
 	t_vector2i	size;
 	int			border_width;
@@ -108,10 +110,6 @@ typedef struct s_player
 
 typedef struct s_raycast
 {
-	t_vector2f	pos;
-	t_vector2f	dir;
-	t_vector2f	plane;
-	double		camera_x;
 	t_vector2f	ray_dir;
 	t_vector2i	map;
 	t_vector2f	side_dist;
@@ -120,14 +118,10 @@ typedef struct s_raycast
 	t_vector2i	step;
 	int			hit;
 	int			side;
-	int			line_height;
-	int			draw_start;
-	int			draw_end;
-	int			tex_num;
+	int			tex_ind;
 	double		wall_x;
-	t_vector2i	tex;
+	t_vector2i	tex_pos;
 	int			color;
-	int			prev_mouse_x;
 }	t_raycast;
 
 typedef struct s_game
@@ -140,12 +134,14 @@ typedef struct s_game
 	int			tex_width;
 	int			tex_height;
 	int			colors[2];
-	t_vector2i	player;
+	t_player	player;
 	t_raycast	ray;
+	t_vector2i	start_pos;
 	int			map_width;
 	int			map_height;
 	char		**map;
 	t_minimap	minimap;
+	int			prev_mouse_x;
 }	t_game;
 
 int		main(int argc, char **argv);
@@ -170,19 +166,25 @@ void	clean_data(t_game *g);
 void	clean_mlx(t_game *g);
 
 void	my_mlx_pixel_put(t_textures *data, int x, int y, int color);
-void	draw_vline(t_textures *data, int x, t_vector2i y12, int color);
 void	*xpm2img(t_game *g, char *path);
 
 int		exit_game(t_game *g);
 int		movement(int keycode, t_game *game);
 int		draw_scene(t_game *g);
 void	clean_scene(t_game *g);
-int		get_texture_color(t_textures *texture, int x, int y);
+int		get_tex_color(t_textures *texture, t_vector2i tex_pos);
 int		mouse_rotate(int x, int y, t_game *g);
 
 void	init_minimap(t_game *g);
-void 	draw_minimap(t_game *g);
+void	draw_minimap(t_game *g);
 void	draw_rectangle(t_game *g, t_vector2i start, t_vector2i size, int color);
 void	draw_circle(t_game *g, t_vector2i start, int radius, int color);
+void	draw_vline(t_game *g, int x);
+void	init_player(t_game *g);
+void	init_game(t_game *g);
+void	clean_scene(t_game *g);
+void	setup_dda_x(t_game *g);
+void	setup_dda_y(t_game *g);
+void	set_new_pos(t_game *g, t_vector2f move_dir);
 
 #endif

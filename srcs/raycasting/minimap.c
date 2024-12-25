@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:09:15 by shamkharyan       #+#    #+#             */
-/*   Updated: 2024/12/25 16:04:21 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/25 18:31:29 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ static void	draw_minimap_rect(t_game *g, int x, int y)
 	rect_size.x = g->minimap.scale;
 	rect_size.y = g->minimap.scale;
 	rect_pos.x = g->minimap.offset.x
-		+ (x - g->ray.pos.x) * g->minimap.scale + g->minimap.size.x / 2;
+		+ (x - g->player.pos.x) * g->minimap.scale + g->minimap.size.x / 2;
 	rect_pos.y = g->minimap.offset.y
-		+ (y - g->ray.pos.y) * g->minimap.scale + g->minimap.size.y / 2;
+		+ (y - g->player.pos.y) * g->minimap.scale + g->minimap.size.y / 2;
 	if (rect_pos.x >= g->minimap.offset.x && rect_pos.y >= g->minimap.offset.y
 		&& rect_pos.x < g->minimap.offset.x + g->minimap.size.x
 		- 2 * g->minimap.border_width
@@ -58,9 +58,9 @@ static void	draw_player(t_game *g)
 	t_vector2i	player_pos;
 
 	player_pos.x = g->minimap.offset.x
-		+ g->minimap.size.x / 2.0 - g->minimap.scale / 2.0;
+		+ g->minimap.size.x / 2.0;
 	player_pos.y = g->minimap.offset.y
-		+ g->minimap.size.y / 2.0 - g->minimap.scale / 2.0;
+		+ g->minimap.size.y / 2.0;
 	draw_circle(g, player_pos, g->minimap.scale / 2, g->minimap.player_color);
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting_utils.c                                 :+:      :+:    :+:   */
+/*   raycasting_utils_1.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:40:34 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/12/25 14:25:15 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/25 18:56:24 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,18 @@ void	my_mlx_pixel_put(t_textures *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*) dst = color;
+	*(unsigned int *) dst = color;
 }
 
-void	draw_vline(t_textures *data, int x, t_vector2i y12, int color)
+int	get_tex_color(t_textures *texture, t_vector2i tex_pos)
 {
-	int y;
+	char	*pixel;
+	int		color;
 
-	y = y12.x - 1;
-	while (++y <= y12.y)
-		my_mlx_pixel_put(data, x, y, color);
-}
-
-int get_texture_color(t_textures *texture, int x, int y)
-{
-    char	*pixel;
-    int		color;
-
-    pixel = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
-    color = *(unsigned int *)pixel;
-
-    return color;
+	pixel = texture->addr + (tex_pos.y * texture->line_length
+			+ tex_pos.x * (texture->bits_per_pixel / 8));
+	color = *(unsigned int *)pixel;
+	return (color);
 }
 
 double	ternary(int condition, double t, double f)
@@ -50,4 +41,18 @@ double	ternary(int condition, double t, double f)
 int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+void	set_new_pos(t_game *g, t_vector2f move_dir)
+{
+	t_vector2i	new_pos;
+
+	new_pos.x = (int)(g->player.pos.x + move_dir.x);
+	new_pos.y = (int)(g->player.pos.y + move_dir.y);
+	if ((int)new_pos.y >= 0 && (int)new_pos.y < g->map_height
+		&& g->map[(int)new_pos.y][(int)(g->player.pos.x)] == '0')
+		g->player.pos.y += move_dir.y;
+	if ((int)new_pos.x >= 0 && (int)new_pos.x < g->map_width
+		&& g->map[(int)(g->player.pos.y)][(int)new_pos.x] == '0')
+		g->player.pos.x += move_dir.x;
 }
