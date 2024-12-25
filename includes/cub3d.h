@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
+/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/20 22:34:24 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/12/25 16:02:05 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,26 @@
 # include <math.h>
 
 //Linux
-# define KEY_W 119
-# define KEY_UP 65362
-# define KEY_S 115
-# define KEY_DOWN 65364
-# define KEY_A 97
-# define KEY_LEFT 65361
-# define KEY_D 100
-# define KEY_RIGHT 65363
-# define KEY_ESC 65307
+// # define KEY_W 119
+// # define KEY_UP 65362
+// # define KEY_S 115
+// # define KEY_DOWN 65364
+// # define KEY_A 97
+// # define KEY_LEFT 65361
+// # define KEY_D 100
+// # define KEY_RIGHT 65363
+// # define KEY_ESC 65307
 
 //MacOS
-// # define KEY_W 13
-// # define KEY_UP 126
-// # define KEY_S 1
-// # define KEY_DOWN 125
-// # define KEY_A 0
-// # define KEY_LEFT 123
-// # define KEY_D 2
-// # define KEY_RIGHT 124
-// # define KEY_ESC 53
+# define KEY_W 13
+# define KEY_UP 126
+# define KEY_S 1
+# define KEY_DOWN 125
+# define KEY_A 0
+# define KEY_LEFT 123
+# define KEY_D 2
+# define KEY_RIGHT 124
+# define KEY_ESC 53
 
 # define TEXTURE_W 64
 # define TEXTURE_H 64
@@ -74,30 +74,50 @@ typedef struct s_textures
 	int		endian;
 }	t_textures;
 
-typedef struct s_icoord
+typedef struct s_vector2i
 {
 	int	x;
 	int	y;
-}	t_icoord;
+}	t_vector2i;
 
-typedef struct s_dcoord
+typedef struct s_vector2f
 {
 	double	x;
 	double	y;
-}	t_dcoord;
+}	t_vector2f;
+
+typedef struct s_minimap
+{
+	int 		scale;
+	t_vector2i	offset;
+	t_vector2i	size;
+	int			border_width;
+	int			wall_color;
+	int			player_color;
+	int			void_color;
+	int			ground_color;
+	int			border_color;
+}	t_minimap;
+
+typedef struct s_player
+{
+	t_vector2f	pos;
+	t_vector2f	dir;
+	t_vector2f	plane;
+}	t_player;
 
 typedef struct s_raycast
 {
-	t_dcoord	pos;
-	t_dcoord	dir;
-	t_dcoord	plane;
+	t_vector2f	pos;
+	t_vector2f	dir;
+	t_vector2f	plane;
 	double		camera_x;
-	t_dcoord	ray_dir;
-	t_icoord	map;
-	t_dcoord	side_dist;
-	t_dcoord	delta_dist;
+	t_vector2f	ray_dir;
+	t_vector2i	map;
+	t_vector2f	side_dist;
+	t_vector2f	delta_dist;
 	double		perp_wall_dist;
-	t_icoord	step;
+	t_vector2i	step;
 	int			hit;
 	int			side;
 	int			line_height;
@@ -105,7 +125,7 @@ typedef struct s_raycast
 	int			draw_end;
 	int			tex_num;
 	double		wall_x;
-	t_icoord	tex;
+	t_vector2i	tex;
 	int			color;
 	int			prev_mouse_x;
 }	t_raycast;
@@ -120,11 +140,12 @@ typedef struct s_game
 	int			tex_width;
 	int			tex_height;
 	int			colors[2];
-	t_icoord	player;
+	t_vector2i	player;
 	t_raycast	ray;
 	int			map_width;
 	int			map_height;
 	char		**map;
+	t_minimap	minimap;
 }	t_game;
 
 int		main(int argc, char **argv);
@@ -149,7 +170,7 @@ void	clean_data(t_game *g);
 void	clean_mlx(t_game *g);
 
 void	my_mlx_pixel_put(t_textures *data, int x, int y, int color);
-void	draw_vline(t_textures *data, int x, t_icoord y12, int color);
+void	draw_vline(t_textures *data, int x, t_vector2i y12, int color);
 void	*xpm2img(t_game *g, char *path);
 
 int		exit_game(t_game *g);
@@ -158,6 +179,10 @@ int		draw_scene(t_game *g);
 void	clean_scene(t_game *g);
 int		get_texture_color(t_textures *texture, int x, int y);
 int		mouse_rotate(int x, int y, t_game *g);
+
+void	init_minimap(t_game *g);
 void 	draw_minimap(t_game *g);
+void	draw_rectangle(t_game *g, t_vector2i start, t_vector2i size, int color);
+void	draw_circle(t_game *g, t_vector2i start, int radius, int color);
 
 #endif

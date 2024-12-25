@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
+/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:03:53 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/20 22:34:58 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/12/25 16:15:06 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void set_directions(t_game *g)
     g->map[g->player.y][g->player.x] = '0';
 }
 
-static void set_start_values(t_game *g)
+static void init_game(t_game *g)
 {
     g->mlx_win = mlx_new_window(g->mlx, SCREEN_W, SCREEN_H, "cub3d");
     g->screen_buff.img = mlx_new_image(g->mlx, SCREEN_W, SCREEN_H);
@@ -50,6 +50,7 @@ static void set_start_values(t_game *g)
 	g->ray.dir.x = 0;
 	g->ray.dir.y = 0;
 	g->ray.prev_mouse_x = SCREEN_W / 2;
+	set_directions(g);
 }
 
 void	clean_scene(t_game *g)
@@ -165,8 +166,8 @@ int    draw_scene(t_game *g)
 
 void	start(t_game *g)
 {
-	set_start_values(g);
-    set_directions(g);
+	init_game(g);
+	init_minimap(g);
 	mlx_hook(g->mlx_win, 6, 0, mouse_rotate, g);
     mlx_loop_hook(g->mlx, draw_scene, g);
     mlx_hook(g->mlx_win, 17, 0, exit_game, g);

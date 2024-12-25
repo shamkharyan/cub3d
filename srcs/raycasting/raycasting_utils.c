@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:40:34 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/09 16:27:43 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/25 14:25:15 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	my_mlx_pixel_put(t_textures *data, int x, int y, int color)
 	*(unsigned int*) dst = color;
 }
 
-void	draw_vline(t_textures *data, int x, t_icoord y12, int color)
+void	draw_vline(t_textures *data, int x, t_vector2i y12, int color)
 {
 	int y;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shamkharyan <shamkharyan@student.42.fr>    +#+  +:+       +#+        */
+/*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 16:04:57 by shamkharyan       #+#    #+#             */
-/*   Updated: 2024/11/20 22:41:32 by shamkharyan      ###   ########.fr       */
+/*   Updated: 2024/12/25 14:25:52 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	move(t_game *g, int direction)
 {
-	t_dcoord	move_dir;
+	t_vector2f	move_dir;
 
 	if (direction == NO)
 	{
