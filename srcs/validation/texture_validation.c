@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:54:18 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/09 18:12:41 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/25 20:47:04 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	check_commas(char *color)
 
 	i = -1;
 	count = 0;
+	if (color[0] == ',' || color[ft_strlen(color) - 1] == ',')
+		return (0);
 	while (color[++i] != '\0')
 		if (color[i] == ',')
 			++count;

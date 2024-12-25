@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 16:28:54 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/09 16:29:38 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/25 20:58:56 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	err_msg(const char *err)
 	write(2, err, ft_strlen(err));
 }
 
-void	game_init(t_game *g)
+void	setup_game(t_game *g)
 {
 	int	i;
 

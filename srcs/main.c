@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:42 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/12/25 18:58:12 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/25 20:59:19 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char **argv)
 
 	if (argc == 2)
 	{
-		game_init(&g);
+		setup_game(&g);
 		if (!check_all(&g, argv[1]))
 			return (0);
 		printf("OK\n");

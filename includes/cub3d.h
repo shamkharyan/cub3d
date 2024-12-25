@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:02:17 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/12/25 18:53:27 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/25 20:59:57 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,7 @@ typedef struct s_game
 	int			prev_mouse_x;
 }	t_game;
 
-int		main(int argc, char **argv);
-void	game_init(t_game *g);
+void	setup_game(t_game *g);
 int		check_extention(char *path);
 int		check_textures(t_game *g, int fd, char **line);
 int		check_map(t_game *g, int fd, char **line);
@@ -179,7 +178,6 @@ void	init_minimap(t_game *g);
 void	draw_minimap(t_game *g);
 void	draw_rectangle(t_game *g, t_vector2i start, t_vector2i size, int color);
 void	draw_circle(t_game *g, t_vector2i start, int radius, int color);
-void	draw_vline(t_game *g, int x);
 void	init_player(t_game *g);
 void	init_game(t_game *g);
 void	clean_scene(t_game *g);

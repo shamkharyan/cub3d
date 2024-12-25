@@ -6,13 +6,13 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:03:53 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/12/25 18:28:50 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/25 20:48:27 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	calculate_perp_wall_dist(t_game *g)
+static void	calculate_perp_wall_dist(t_game *g)
 {
 	while (g->ray.hit == 0)
 	{
@@ -37,7 +37,7 @@ void	calculate_perp_wall_dist(t_game *g)
 		g->ray.perp_wall_dist = g->ray.side_dist.y - g->ray.delta_dist.y;
 }
 
-void	setup_textures(t_game *g)
+static void	setup_textures(t_game *g)
 {
 	if (g->ray.side == 1)
 		g->ray.tex_ind = ternary(g->ray.ray_dir.y > 0, SO, NO);
@@ -57,7 +57,7 @@ void	setup_textures(t_game *g)
 			- g->ray.tex_pos.x - 1;
 }
 
-void	draw_vline(t_game *g, int x)
+static void	draw_vline(t_game *g, int x)
 {
 	int			line_height;
 	int			y;
