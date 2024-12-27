@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture_validation.c                               :+:      :+:    :+:   */
+/*   data_validation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:22 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/11/09 16:04:12 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:25:24 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,24 @@ static int	check_token(t_game *g, char **tokens, int *tokens_count)
 {
 	int	i;
 
-	if (split_size(tokens) == 2)
-	{
-		i = -1;
-		if (!ft_strncmp(tokens[0], "NO", ft_strlen(tokens[0])))
-			i = 0;
-		else if (!ft_strncmp(tokens[0], "SO", ft_strlen(tokens[0])))
-			i = 1;
-		else if (!ft_strncmp(tokens[0], "WE", ft_strlen(tokens[0])))
-			i = 2;
-		else if (!ft_strncmp(tokens[0], "EA", ft_strlen(tokens[0])))
-			i = 3;
-		else if (!ft_strncmp(tokens[0], "C", ft_strlen(tokens[0])))
-			i = 4;
-		else if (!ft_strncmp(tokens[0], "F", ft_strlen(tokens[0])))
-			i = 5;
-		if (i != -1 && ++tokens_count[i] == 1)
-			g->map_data[i] = ft_strdup(tokens[1]);
+	i = -1;
+	if (split_size(tokens) != 2)
 		return (i);
-	}
-	return (-1);
+	if (!ft_strncmp(tokens[0], "NO", ft_strlen(tokens[0])))
+		i = 0;
+	else if (!ft_strncmp(tokens[0], "SO", ft_strlen(tokens[0])))
+		i = 1;
+	else if (!ft_strncmp(tokens[0], "WE", ft_strlen(tokens[0])))
+		i = 2;
+	else if (!ft_strncmp(tokens[0], "EA", ft_strlen(tokens[0])))
+		i = 3;
+	else if (!ft_strncmp(tokens[0], "C", ft_strlen(tokens[0])))
+		i = 4;
+	else if (!ft_strncmp(tokens[0], "F", ft_strlen(tokens[0])))
+		i = 5;
+	if (i != -1 && ++tokens_count[i] == 1)
+		g->map_data[i] = ft_strdup(tokens[1]);
+	return (i);
 }
 
 static int	check_token_count(int *tokens_count)

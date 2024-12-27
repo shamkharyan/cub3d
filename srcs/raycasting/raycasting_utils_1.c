@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:40:34 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/12/25 18:56:24 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:05:44 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,18 @@ int	create_trgb(int t, int r, int g, int b)
 
 void	set_new_pos(t_game *g, t_vector2f move_dir)
 {
-	t_vector2i	new_pos;
+	t_vector2f	new_pos;
 
-	new_pos.x = (int)(g->player.pos.x + move_dir.x);
-	new_pos.y = (int)(g->player.pos.y + move_dir.y);
+	new_pos.x = g->player.pos.x + move_dir.x;
+	new_pos.y = g->player.pos.y + move_dir.y;
+	if (new_pos.x == (int)new_pos.x)
+		new_pos.x += 0.01;
+	if (new_pos.y == (int)new_pos.y)
+		new_pos.y += 0.01;
 	if ((int)new_pos.y >= 0 && (int)new_pos.y < g->map_height
-		&& g->map[(int)new_pos.y][(int)(g->player.pos.x)] == '0')
-		g->player.pos.y += move_dir.y;
+		&& g->map[(int)new_pos.y][(int)g->player.pos.x] == '0')
+		g->player.pos.y = new_pos.y;
 	if ((int)new_pos.x >= 0 && (int)new_pos.x < g->map_width
-		&& g->map[(int)(g->player.pos.y)][(int)new_pos.x] == '0')
-		g->player.pos.x += move_dir.x;
+		&& g->map[(int)g->player.pos.y][(int)new_pos.x] == '0')
+		g->player.pos.x = new_pos.x;
 }

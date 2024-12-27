@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:01:42 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/12/25 20:59:19 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:26:58 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@ int	check_all(t_game *g, char *path)
 {
 	int		fd;
 	char	*last_line;
+	char	*trimed;
 
-	if (!check_extention(path))
+	trimed = ft_strtrim(path, " \t");
+	if (!check_extention(trimed))
 		return (err_msg("Wrong extention of the map.\n"), 0);
-	fd = open(path, O_RDONLY);
+	fd = open(trimed, O_RDONLY);
+	free(trimed);
 	if (fd < 0)
 		return (err_msg("Can't open file or file not exist.\n"), 0);
 	if (!check_textures(g, fd, &last_line))
