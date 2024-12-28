@@ -6,7 +6,7 @@
 /*   By: pshamkha <pshamkha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:34:31 by pshamkha          #+#    #+#             */
-/*   Updated: 2024/12/25 16:25:39 by pshamkha         ###   ########.fr       */
+/*   Updated: 2024/12/27 17:00:48 by pshamkha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,15 @@ int	check_map(t_game *g, int fd, char **line)
 {
 	get_map(g, fd, line);
 	if (!check_content(g))
+	{
+		free(*line);
 		return (err_msg("Wront content in the map.\n"), 0);
+	}
 	if (!check_borders(g))
+	{
+		free(*line);
 		return (err_msg("Borders aren't closed.\n"), 0);
+	}
 	while (*line != NULL && is_empty_line(*line))
 	{
 		free(*line);
